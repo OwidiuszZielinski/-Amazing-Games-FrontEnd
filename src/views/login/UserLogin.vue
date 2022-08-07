@@ -1,23 +1,23 @@
 <template>
-   <v-app >
-      <v-main>
-        <v-container fluid fill-height>
-            <v-row
-              no-gutters
-               
-                >
-             <v-col
-        md="2"
-        offset-md="12"
-      >
-        <v-card
-          class="pa-2"
-          outlined
-          tile
-        >
-                  <v-card class="elevation-12">
+        <container>
+          <v-row >
+                <v-img src="@/assets/285267211_5547780368620708_1663460914402098455_n.jpg" alt=""
+                contain   
+                 height="550px"
+                width="1150px">
+                </v-img>
+           
+            </v-row>
+            
+           <v-row>
+           
+            <v-col></v-col>
+              <v-col>
+              <v-card class="elevation-12">
                      <v-toolbar dark color="grey">
-                        <v-toolbar-title>Login form</v-toolbar-title>
+                        <v-toolbar-title>
+                            <p style="color: " >Login form</p>
+                           </v-toolbar-title>
                      </v-toolbar>
                      <v-card-text>
                      <form ref="form" @submit.prevent="login()">
@@ -44,35 +44,31 @@
                       </form>
                      </v-card-text>
                   </v-card>
-                  </v-card>
-                </v-col>
-                
-              </v-row>
-               
-          
-            
-         </v-container>
-      </v-main>
-   </v-app>
-   
+
+              </v-col>   
+              <v-col></v-col>
+         </v-row>
+         </container>
+
 </template>
 
 <script>
+
 export default {
-   
-  name: "UserLogin",
-  data() {
-    return {
-      username: "",
-      password: "",
-    };
-  },
-  methods: {
-    login() {
-      const { username } = this;
-      console.log(username + "logged in")
+    name: "UserLogin",
+    data() {
+        return {
+            username: "",
+            password: "",
+        };
     },
-  },
+    methods: {
+        login() {
+            const { username } = this;
+            console.log(username + "logged in");
+        },
+    },
+    
 };
 
 </script> -->

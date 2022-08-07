@@ -1,7 +1,7 @@
 <template>
 
      <container> 
-            <v-row style="height: 50%" justify="center">
+            <v-row >
                 <v-img src="@/assets/285267211_5547780368620708_1663460914402098455_n.jpg" alt=""
                 contain   
                  height="550px"
@@ -33,7 +33,7 @@
              <v-row>""</v-row>
         <h1>
             
-        <p style="color: #97341F">Please login to get access</p>
+        <p style="color: #97341F" >Please login to get access</p>
         
     </h1> 
            
@@ -50,13 +50,7 @@ export default{
             router.push(link);
         }
     },
-    justify: [
-        "start",
-        "center",
-        "end",
-        "space-around",
-        "space-between",
-    ],
+   
     
 }
 
