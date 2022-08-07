@@ -39,20 +39,14 @@
         app
         clipped-left
       >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon link v-on:click = "route('/')"></v-app-bar-nav-icon>
         <v-toolbar-title>Amazing Games
         </v-toolbar-title>
       </v-app-bar>
       
       <v-main>
-      
-    
-            
-              <router-view/>
-      
-     
-           
           
+              <router-view/>
            
       </v-main>
       
