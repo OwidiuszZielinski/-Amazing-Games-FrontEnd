@@ -1,7 +1,7 @@
 <template>
         <container>
           <v-row >
-                <v-img src="@/assets/285267211_5547780368620708_1663460914402098455_n.jpg" alt=""
+                <v-img src="@/assets/background.jpg" alt=""
                 contain   
                  height="550px"
                 width="1150px">

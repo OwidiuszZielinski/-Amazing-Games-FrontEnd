@@ -1,10 +1,7 @@
 <template>
-  
-  <div class="home">
-     
+    
       <HomeGames></HomeGames>
      
-  </div>
 </template>
 
 <script>

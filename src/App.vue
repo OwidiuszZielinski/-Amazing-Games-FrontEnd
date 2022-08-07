@@ -39,12 +39,15 @@
         app
         clipped-left
       >
-        <v-app-bar-nav-icon link v-on:click = "route('/')"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>Amazing Games
+
         </v-toolbar-title>
+        <v-col></v-col>
+        Login
       </v-app-bar>
       
-      <v-main>
+      <v-main fluid>
           
               <router-view/>
            
@@ -84,21 +87,18 @@ nav {
 }
 </style>
 <script>
-import router from './router'
-import { Icon } from '@iconify/vue2';
-
-
-
-export default{
-    methods: {
-        route(link) {
-            router.push(link);
+import router from '@/router'
+  export default {
+    data: () => ({
+    
+    drawer: null,
+      
+    }),
+      methods: {
+        route (ln){
+          
+          router.push(ln)
         }
-    },
-    componets: {
-        Icon,
-    }
-}
-
-
+      },
+  }
 </script>
