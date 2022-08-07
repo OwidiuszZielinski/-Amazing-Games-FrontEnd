@@ -43,20 +43,23 @@
         <v-toolbar-title>Amazing Games
         </v-toolbar-title>
       </v-app-bar>
-  
+      
       <v-main>
-        <v-container
-          class="fill-height"
+      
+    
+            
+              <router-view/>
+      
+     
+           
           
-        >
-         <router-view/>
-
-        </v-container>
+           
       </v-main>
-  
+      
       <v-footer app>
         <span>&copy; 2022 Owidiusz Zieliński</span>
       </v-footer>
+      
     </v-app>
   </v-app>
 </div>
@@ -89,15 +92,18 @@ nav {
 <script>
 import router from './router'
 import { Icon } from '@iconify/vue2';
+
+
+
 export default{
-  methods : {
-    route(link){
-      router.push(link)
+    methods: {
+        route(link) {
+            router.push(link);
+        }
+    },
+    componets: {
+        Icon,
     }
-  },
-  componets:{
-    Icon
-  }
 }
 
 
