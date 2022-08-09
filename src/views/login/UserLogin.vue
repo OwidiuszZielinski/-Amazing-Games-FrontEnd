@@ -1,22 +1,13 @@
 <template>
-        <container>
-          <v-row >
-                <v-img src="@/assets/background.jpg" alt=""
-                contain   
-                 height="550px"
-                width="1150px">
-                </v-img>
-           
-            </v-row>
-            
-           <v-row>
-           
-            <v-col></v-col>
-              <v-col>
+    <main style="height: 100%; background: url('background.jpg') no-repeat center center" justify="center" >
+         <v-container fluid fill-height >
+            <v-row  align="center" style="height: 50%;">
+            <v-col md="4"></v-col>
+            <v-col md = "4">
               <v-card class="elevation-12">
-                     <v-toolbar dark color="grey">
+                     <v-toolbar dark color="#272727">
                         <v-toolbar-title>
-                            <p style="color: " >Login form</p>
+                            <p style="color: " >LOGIN</p>
                            </v-toolbar-title>
                      </v-toolbar>
                      <v-card-text>
@@ -40,16 +31,14 @@
                               placeholder="password"
                               required
                            ></v-text-field>
-                           <v-btn type="submit" class="mt-4" color="grey" value="log in">Login</v-btn>
+                           <v-btn type="submit" class="mt-4" color="  color: #2c3e50;" value="log in">Login</v-btn>
                       </form>
                      </v-card-text>
-                  </v-card>
-
-              </v-col>   
-              <v-col></v-col>
-         </v-row>
-         </container>
-
+                  </v-card> </v-col>  
+                </v-row>
+         </v-container>
+        
+</main>
 </template>
 
 <script>

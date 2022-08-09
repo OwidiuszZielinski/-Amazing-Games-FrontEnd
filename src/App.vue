@@ -3,6 +3,7 @@
   <v-app id="inspire">
     <v-app id="inspire">
       <v-navigation-drawer
+        hidden
         v-model="drawer"
         app
         clipped
@@ -33,20 +34,38 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-      </v-navigation-drawer>
-  
+    
+    </v-navigation-drawer>
+    
+      
       <v-app-bar
         app
         clipped-left
       >
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>Amazing Games
-
+        <v-btn elevation = 0>
+        <v-toolbar-title link v-on:click = "route('/')">Amazing Games
+        
         </v-toolbar-title>
-        <v-col></v-col>
-        Login
+        </v-btn>
+        <v-row justify = 'end'>
+        <v-col  md = "1" align = 'end'>
+        
+          <v-btn
+          elevation = 0 
+          link v-on:click="route('/login')" block color="dark-grey">LOGIN
+          </v-btn>
+          </v-col>
+          <v-col  md = "1" align = 'end'>
+          <v-btn
+          elevation = 0 
+          link v-on:click="route('/login')" block color="dark-grey">REGISTER
+          </v-btn>
+          </v-col>
+        </v-row>
       </v-app-bar>
-      
+     
+   
       <v-main fluid>
           
               <router-view/>
@@ -88,17 +107,16 @@ nav {
 </style>
 <script>
 import router from '@/router'
+
+
   export default {
     data: () => ({
-    
-    drawer: null,
-      
+        drawer: null,
     }),
-      methods: {
-        route (ln){
-          
-          router.push(ln)
+    methods: {
+        route(ln) {
+            router.push(ln);
         }
-      },
-  }
+    }
+}
 </script>
