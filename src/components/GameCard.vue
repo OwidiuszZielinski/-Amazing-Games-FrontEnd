@@ -3,7 +3,7 @@
   <v-card 
     
     class="d-flex align-content-start flex-wrap mx-1 mt-1 "
-    max-width="500"
+    max-width="344"
   >
     <v-card-text style="height: 100%; background: url('CardBackground.jpg') no-repeat center center" justify="center" >
       
