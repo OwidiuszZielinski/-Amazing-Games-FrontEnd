@@ -13,7 +13,7 @@
                      <v-card-text>
                      <form ref="form" @submit.prevent="login()">
                             <v-text-field
-                              
+                              color = "#272727"
                               v-model="username"
                               name="username"
                               label="Username"
@@ -31,7 +31,7 @@
                               placeholder="password"
                               required
                            ></v-text-field>
-                           <v-btn type="submit" class="mt-4" color="  color: #2c3e50;" value="log in">Login</v-btn>
+                           <v-btn type="submit" class="mt-4" color="#272727" value="log in">Login</v-btn>
                       </form>
                      </v-card-text>
                   </v-card> </v-col>  

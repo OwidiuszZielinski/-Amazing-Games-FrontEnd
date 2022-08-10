@@ -8,8 +8,10 @@
         app
         clipped
       >
+      
         <v-list dense>
-          <v-list-item link v-on:click = "route('/about')">
+       
+          <v-list-item  link v-on:click = "route('/about')" >
             <v-list-item-action>
               <v-icon>mdi-play</v-icon>
             </v-list-item-action>
@@ -33,6 +35,17 @@
               <v-list-item-title>Users</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+         
+          <v-list-item link >
+            <v-list-item-action>
+              <v-icon>mdi-cog</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Settings</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+      
+        
         </v-list>
     
     </v-navigation-drawer>
@@ -59,7 +72,7 @@
           <v-col  md = "1" align = 'end'>
           <v-btn
           elevation = 0 
-          link v-on:click="route('/login')" block color="dark-grey">REGISTER
+          link v-on:click="route('/register')" block color="dark-grey">REGISTER
           </v-btn>
           </v-col>
         </v-row>
@@ -107,6 +120,7 @@ nav {
 </style>
 <script>
 import router from '@/router'
+
 
 
   export default {
