@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import UserLogin from '../views/login/UserLogin.vue'
 import UserRegister from '../views/register/UserRegister.vue'
+import AvailableGames from '../views/AvailableGames.vue'
 
 Vue.use(VueRouter)
 
@@ -15,7 +16,7 @@ const routes = [
   {
     path: '/available',
     name: 'available',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AvailableGames.vue')
+    component: AvailableGames
   },
   {
     path: '/login',

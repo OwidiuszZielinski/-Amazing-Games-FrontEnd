@@ -11,7 +11,7 @@
       
         <v-list dense>
        
-          <v-list-item  link v-on:click = "route('/about')" >
+          <v-list-item  link v-on:click = "route('/available')" >
             <v-list-item-action>
               <v-icon>mdi-play</v-icon>
             </v-list-item-action>

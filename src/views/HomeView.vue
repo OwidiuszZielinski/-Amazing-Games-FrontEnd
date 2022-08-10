@@ -9,9 +9,6 @@
 
 import HomeGames from '@/components/HomeGames.vue'
 
-
-
-
 export default {
   name: 'HomeView',
   components: {
