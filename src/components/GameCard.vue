@@ -10,7 +10,7 @@
       <p class="text-h4 text--primary" >
         {{title}}
       </p>
-      <div> Type : {{group}}</div>
+      <div> Type : {{groupe}}</div>
       
       <p class="title"> Rating : {{rating}}</p>
       <div class="text--primary"
@@ -48,6 +48,6 @@
 
 <script>
   export default {
-    props:['group','title','price','rating']
+    props:['groupe','title','price','rating']
   }
 </script>
