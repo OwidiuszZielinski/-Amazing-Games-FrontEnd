@@ -19,7 +19,7 @@
               <v-list-item-title>Games</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link>
+          <v-list-item link v-on:click = "route('/orders')">
             <v-list-item-action>
               <v-icon>mdi-currency-usd</v-icon>
             </v-list-item-action>
@@ -27,7 +27,7 @@
               <v-list-item-title>Orders</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-           <v-list-item link >
+           <v-list-item link v-on:click = "route('/users')" >
             <v-list-item-action>
               <v-icon>mdi-account-multiple</v-icon>
             </v-list-item-action>

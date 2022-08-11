@@ -4,6 +4,8 @@ import HomeView from '../views/HomeView.vue'
 import UserLogin from '../views/login/UserLogin.vue'
 import UserRegister from '../views/register/UserRegister.vue'
 import AvailableGames from '../views/AvailableGames.vue'
+import UsersView from '../views/UsersView.vue'
+import OrdersView from '../views/OrdersView.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +29,15 @@ const routes = [
     path: '/register',
     name: 'register',
     component: UserRegister
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: UsersView
+  }, {
+    path: '/orders',
+    name: 'orders',
+    component: OrdersView
   },
 ]
 
