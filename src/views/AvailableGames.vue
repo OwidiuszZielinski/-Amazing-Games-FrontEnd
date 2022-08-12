@@ -5,7 +5,8 @@
 :title ="game.title"
   :groupe ="game.groupe"
   :rating ="game.rating"
-  :price ="game.price"/>
+  :price ="game.price"
+  />
 
   
 </v-container>

@@ -5,6 +5,7 @@
     class="d-flex align-content-start flex-wrap mx-1 mt-1 "
     max-width="344"
   >
+  <MoreInfoDialog v-model="showScheduleForm"></MoreInfoDialog>
     <v-card-text style="height: 100%; background: url('CardBackground.jpg') no-repeat center center" justify="center" >
       
       <p class="text-h4 text--primary" >
@@ -23,10 +24,12 @@
         <v-col  md = "5" align-center >
       
     <v-card-actions >
-       <v-btn
+       <v-btn 
         text
         color="deep-purple accent-4"
+        @click.stop="showScheduleForm = true"
       >
+      
         MORE INFO
       </v-btn>
        <v-btn
@@ -47,7 +50,18 @@
 </template>
 
 <script>
+import MoreInfoDialog from './MoreInfoDialog.vue';
+
   export default {
-    props:['groupe','title','price','rating']
-  }
+    data() {
+        return {
+            games :[],
+            showScheduleForm: false,
+            
+        };
+    },
+   
+    props: ["groupe", "title", "price", "rating","description"],
+    components: { MoreInfoDialog }
+}
 </script>
