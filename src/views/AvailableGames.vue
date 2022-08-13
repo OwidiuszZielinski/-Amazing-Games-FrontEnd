@@ -3,9 +3,10 @@
 <v-container fill-height >
 <GameCard v-for="game in games" :key="game.id"
 :title ="game.title"
-  :groupe ="game.groupe"
+  :gameGroup ="game.gameGroup"
   :rating ="game.rating"
-  :price ="game.price"/>
+  :price ="game.price"
+  :description="game.description"/>
 
   
 </v-container>
