@@ -6,6 +6,8 @@ import UserRegister from '../views/register/UserRegister.vue'
 import AvailableGames from '../views/AvailableGames.vue'
 import UsersView from '../views/UsersView.vue'
 import OrdersView from '../views/OrdersView.vue'
+import CartView from '..//views/CartView.vue'
+import AddGamView from '..//views/AddGameView.vue'
 
 Vue.use(VueRouter)
 
@@ -38,6 +40,15 @@ const routes = [
     path: '/orders',
     name: 'orders',
     component: OrdersView
+  },{
+    path: '/cart',
+    name: 'cart',
+    component: CartView
+  },
+  {
+    path: '/addgame',
+    name: 'addgame',
+    component: AddGamView
   },
 ]
 

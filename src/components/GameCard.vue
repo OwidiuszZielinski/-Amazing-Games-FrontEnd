@@ -1,25 +1,16 @@
 <template>
-
-
-  <v-card 
-    
+<v-card 
     class="d-flex align-content-start flex-wrap mx-1 mt-1 "
     max-width="344"
   >
-  
-    <v-card-text style="height: 100%; background: url('CardBackground.jpg') no-repeat center center" justify="center" >
-      
+ <v-card-text style="background: url('CardBackground.jpg') no-repeat center center" justify="center" >
       <p class="text-h4 text--primary" >
         {{title}}
       </p>
       <div> Type : {{gameGroup}}</div>
-      
-      <p class="title"> Rating : {{rating}}</p>
-      <div class="text--primary"
-      >
-       Price :{{price}}
-      </div>
-    </v-card-text>
+      <p></p>
+      <p class="title"> Rating : {{rating}} / 10</p>
+        </v-card-text>
     <v-card-actions >
          <v-row justify = 'center' >
         <v-col  md = "5" align-center >
@@ -32,7 +23,7 @@
         color="green"
       >
       <v-icon>mdi-cart</v-icon>
-        BUY
+        {{price}} $
 
       </v-btn>
         
@@ -53,7 +44,7 @@ import MoreInfoDialog from './MoreInfoDialog.vue';
     
     data() {
         return {
-            showScheduleForm: {show: false, description: this.description}
+            showScheduleForm: {show: false, description: this.description, title: this.title}
             
         }
     },

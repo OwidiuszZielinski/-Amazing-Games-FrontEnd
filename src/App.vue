@@ -11,7 +11,7 @@
       
         <v-list dense>
        
-          <v-list-item  link v-on:click = "route('/available')" >
+          <v-list-item v-if="admin" link v-on:click = "route('/available')" >
             <v-list-item-action>
               <v-icon>mdi-play</v-icon>
             </v-list-item-action>
@@ -19,7 +19,23 @@
               <v-list-item-title>Games</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link v-on:click = "route('/orders')">
+           <v-list-item v-if="admin" link v-on:click = "route('/addgame')" >
+            <v-list-item-action>
+              <v-icon>mdi-plus</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Games Panel</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="admin" link v-on:click = "route('/cart')" >
+            <v-list-item-action>
+              <v-icon>mdi-cart</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Cart</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="admin" link v-on:click = "route('/orders')">
             <v-list-item-action>
               <v-icon>mdi-currency-usd</v-icon>
             </v-list-item-action>
@@ -27,7 +43,7 @@
               <v-list-item-title>Orders</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-           <v-list-item link v-on:click = "route('/users')" >
+           <v-list-item  v-if="admin" link v-on:click = "route('/users')" >
             <v-list-item-action>
               <v-icon>mdi-account-multiple</v-icon>
             </v-list-item-action>
@@ -36,7 +52,7 @@
             </v-list-item-content>
           </v-list-item>
          
-          <v-list-item link >
+          <v-list-item v-if="admin" link >
             <v-list-item-action>
               <v-icon>mdi-cog</v-icon>
             </v-list-item-action>
@@ -44,7 +60,7 @@
               <v-list-item-title>Settings</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-      
+          
         
         </v-list>
     
@@ -87,6 +103,7 @@
       
       <v-footer app>
         <span>&copy; 2022 Owidiusz Zieliński</span>
+      
       </v-footer>
       
     </v-app>
@@ -123,8 +140,11 @@ import router from '@/router'
 
 
 
+
   export default {
     data: () => ({
+        admin: true,
+        client: false,
         drawer: null,
     }),
     methods: {
