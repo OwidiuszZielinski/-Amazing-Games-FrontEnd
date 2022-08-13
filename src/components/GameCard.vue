@@ -5,13 +5,17 @@
     class="d-flex align-content-start flex-wrap mx-1 mt-1 "
     max-width="344"
   >
+<<<<<<< HEAD
   <MoreInfoDialog v-model="showScheduleForm"></MoreInfoDialog>
+=======
+  
+>>>>>>> infodialog
     <v-card-text style="height: 100%; background: url('CardBackground.jpg') no-repeat center center" justify="center" >
       
       <p class="text-h4 text--primary" >
         {{title}}
       </p>
-      <div> Type : {{groupe}}</div>
+      <div> Type : {{gameGroup}}</div>
       
       <p class="title"> Rating : {{rating}}</p>
       <div class="text--primary"
@@ -24,6 +28,7 @@
         <v-col  md = "5" align-center >
       
     <v-card-actions >
+<<<<<<< HEAD
        <v-btn 
         text
         color="deep-purple accent-4"
@@ -32,6 +37,9 @@
       
         MORE INFO
       </v-btn>
+=======
+      <MoreInfoDialog v-model="showScheduleForm"></MoreInfoDialog>
+>>>>>>> infodialog
        <v-btn
        
          text
@@ -53,6 +61,7 @@
 import MoreInfoDialog from './MoreInfoDialog.vue';
 
   export default {
+<<<<<<< HEAD
     data() {
         return {
             games :[],
@@ -63,5 +72,17 @@ import MoreInfoDialog from './MoreInfoDialog.vue';
    
     props: ["groupe", "title", "price", "rating","description"],
     components: { MoreInfoDialog }
+=======
+    
+    data() {
+        return {
+            showScheduleForm: {show: false, description: this.description}
+            
+        }
+    },
+   
+    props: ["gameGroup", "title", "price", "rating","description"],
+    components: { MoreInfoDialog },
+>>>>>>> infodialog
 }
 </script>
