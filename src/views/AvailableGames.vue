@@ -1,13 +1,14 @@
 <template>
 
 <v-container fill-height >
+
 <GameCard v-for="game in games" :key="game.id"
 :title ="game.title"
   :gameGroup ="game.gameGroup"
   :rating ="game.rating"
   :price ="game.price"
   :description="game.description"/>
-
+<GameCard></GameCard>
   
 </v-container>
 </template>
@@ -15,6 +16,7 @@
 import axios from 'axios'
 
 import GameCard from '@/components/GameCard.vue'
+
 
 
 export default {

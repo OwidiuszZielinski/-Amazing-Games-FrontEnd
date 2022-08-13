@@ -24,14 +24,6 @@
         <v-col  md = "5" align-center >
       
     <v-card-actions >
-       <v-btn 
-        text
-        color="deep-purple accent-4"
-        @click.stop="showScheduleForm.show = true"
-      >
-      
-        MORE INFO
-      </v-btn>
       <MoreInfoDialog v-model="showScheduleForm"></MoreInfoDialog>
        <v-btn
        
@@ -63,6 +55,6 @@ import MoreInfoDialog from './MoreInfoDialog.vue';
     },
    
     props: ["gameGroup", "title", "price", "rating","description"],
-    components: { MoreInfoDialog }
+    components: { MoreInfoDialog },
 }
 </script>
