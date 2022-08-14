@@ -150,7 +150,7 @@ import axios from 'axios'
           sortable: false,
           value: 'title',
         },
-        { text: 'Type', value: 'gameGroup' },
+        { text: 'Type', value: 'type' },
         { text: 'Price ($)', value: 'price' },
         { text: 'Rating (/10)', value: 'rating' },
         { text: 'Actions', value: 'actions', sortable: false },
@@ -198,7 +198,7 @@ import axios from 'axios'
         initialize () {
         this.games = [
           {
-            gameGroup: this.gameGroup,
+            type: this.type,
             title: this.title,
             price: this.price,
             rating: this.rating,

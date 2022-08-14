@@ -1,15 +1,14 @@
 <template>
 
-<v-container fill-height >
+<v-container  fill-height >
 
 <GameCard v-for="game in games" :key="game.id"
-:title ="game.title"
-  :gameGroup ="game.gameGroup"
+  :title ="game.title"
+  :type ="game.type"
   :rating ="game.rating"
   :price ="game.price"
 
   :description="game.description"/>
-<GameCard></GameCard>
 
   
 </v-container>
@@ -25,7 +24,7 @@ export default {
   data () {
     return {
     games :[]
-    }
+    }             
   },
   created () {
     axios
