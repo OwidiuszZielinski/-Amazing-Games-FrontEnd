@@ -33,7 +33,7 @@
           </template>
           <v-card>
             <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
+              <span class="text-h5">{{formTitle }}</span>
             </v-card-title>
 
             <v-card-text>
@@ -55,8 +55,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.gameGroup"
-                      label="gameGroup"
+                      v-model="editedItem.type"
+                      label="type"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -79,7 +79,36 @@
                       label="rating"
                     ></v-text-field>
                   </v-col>
-                 
+                 <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.description"
+                      label="description"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.availability"
+                      label="availability"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.quantity"
+                      label="quantity"
+                    ></v-text-field>
+                  </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
@@ -138,6 +167,7 @@
 <script>
 import axios from 'axios'
 
+
   export default {
     data: () => ({
       
@@ -149,32 +179,45 @@ import axios from 'axios'
           align: 'start',
           sortable: false,
           value: 'title',
+          description: 'description',
+          availability: 'availability',
+          quantity: 'quantity'
         },
         { text: 'Type', value: 'type' },
         { text: 'Price ($)', value: 'price' },
         { text: 'Rating (/10)', value: 'rating' },
+        { text: 'Description', value: 'description' },
+        { text: 'Availability', value: 'availability' },
+        { text: 'Quantity', value: 'quantity' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       games: [],
       editedIndex: -1,
       editedItem: {
         title: '',
-        type: 0,
-        price: 0,
-        rating: 0,
+        type: '',
+        price: '',
+        rating: '',
+        description: '',
+        availability: true,
+        quantity: 0
+
         
       },
       defaultItem: {
         title: '',
-        type: 0,
-        price: 0,
-        rating: 0,
+        type: '',
+        price: '',
+        rating: '',
+        description: '',
+        availability: true,
+        quantity: 0
         
       },
     }),
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? 'ADD GAME' : 'Edit Item'
       },
     },
 
@@ -192,26 +235,10 @@ import axios from 'axios'
       .get('http://192.168.1.107:8082/games')
       .then(response => (this.games = response.data))
   },
+
     methods: {
-        
+   
       
-        initialize () {
-        this.games = [
-          {
-            type: this.type,
-            title: this.title,
-            price: this.price,
-            rating: this.rating,
-            
-        },{
-            title: 'this.title',
-            type: 'this.gameGroup',
-            price: 11,
-            rating: 11,
-            
-        }
-      ]
-      },
       editItem (item) {
         this.editedIndex = this.games.indexOf(item)
         this.editedItem = Object.assign({}, item)
@@ -246,11 +273,11 @@ import axios from 'axios'
       },
 
       save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.games[this.editedIndex], this.editedItem)
-        } else {
-          this.games.push(this.editedItem)
-        }
+        
+          axios.post('http://192.168.1.107:8082/games/',this.editedItem).then((response)=>{
+          console.log(response);
+          });
+         
         this.close()
       },
     },
