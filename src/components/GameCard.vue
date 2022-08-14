@@ -7,7 +7,7 @@
       <p class="text-h4 text--primary" >
         {{title}}
       </p>
-      <div> Type : {{gameGroup}}</div>
+      <div> Type : {{type}}</div>
       <p></p>
       <p class="title"> Rating : {{rating}} / 10</p>
         </v-card-text>
@@ -49,7 +49,7 @@ import MoreInfoDialog from './MoreInfoDialog.vue';
         }
     },
    
-    props: ["gameGroup", "title", "price", "rating","description"],
+    props: ["type", "title", "price", "rating","description"],
     components: { MoreInfoDialog },
 }
 </script>
