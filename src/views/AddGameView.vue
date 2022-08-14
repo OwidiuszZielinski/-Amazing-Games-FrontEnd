@@ -194,6 +194,7 @@ import axios from 'axios'
       games: [],
       editedIndex: -1,
       editedItem: {
+        
         title: '',
         type: '',
         price: '',
@@ -246,8 +247,12 @@ import axios from 'axios'
       },
 
       deleteItem (item) {
-        this.editedIndex = this.games.indexOf(item)
-        this.editedItem = Object.assign({}, item)
+        
+        axios.delete(`http://192.168.1.107:8082/games/` + item.id )
+        .then(response => {
+         console.log(response);
+     });
+        
         this.dialogDelete = true
       },
 
