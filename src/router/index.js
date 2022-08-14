@@ -7,7 +7,7 @@ import AvailableGames from '../views/AvailableGames.vue'
 import UsersView from '../views/UsersView.vue'
 import OrdersView from '../views/OrdersView.vue'
 import CartView from '..//views/CartView.vue'
-import AddGamView from '..//views/AddGameView.vue'
+import AddGameView from '..//views/AddGameView.vue'
 
 Vue.use(VueRouter)
 
@@ -48,7 +48,7 @@ const routes = [
   {
     path: '/addgame',
     name: 'addgame',
-    component: AddGamView
+    component: AddGameView
   },
 ]
 
