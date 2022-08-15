@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="games"
-    sort-by="calories"
+    sort-by="title"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -31,6 +31,7 @@
               ADD GAME
             </v-btn>
           </template>
+          
           <v-card>
             <v-card-title>
               <span class="text-h5">{{formTitle }}</span>
@@ -123,15 +124,147 @@
                 Cancel
               </v-btn>
               <v-btn
+                
+                class="btn btn-primary"
                 color="blue darken-1"
                 text
                 @click="save"
+                
               >
                 Save
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
+        
+
+
+
+
+
+
+        <v-dialog
+          v-model="dialogEdit"
+          max-width="500px"
+        > 
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">NEW DIALOG</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.title"
+                      label="title"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.type"
+                      label="type"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.price"
+                      label="price"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.rating"
+                      label="rating"
+                    ></v-text-field>
+                  </v-col>
+                 <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.description"
+                      label="description"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.availability"
+                      label="availability"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.quantity"
+                      label="quantity"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="close"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                
+                class="btn btn-primary"
+                color="blue darken-1"
+                text
+                @click="saveEdit(editedItem)"
+                
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
@@ -173,6 +306,7 @@ import axios from 'axios'
       
       dialog: false,
       dialogDelete: false,
+      dialogEdit: false,
       headers: [
         {
           text: 'Title',
@@ -229,6 +363,9 @@ import axios from 'axios'
       dialogDelete (val) {
         val || this.closeDelete()
       },
+      dialogEdit (val) {
+        val || this.closeDelete()
+      },
     },
 
     created () {
@@ -238,12 +375,19 @@ import axios from 'axios'
   },
 
     methods: {
-   
+      
+      saveEdit(item){
+        axios.patch(`http://192.168.1.107:8082/games/`+item.id ,this.editedItem)
+        .then(response => {
+         console.log(response);
+     });
+      this.close()
+      },
       
       editItem (item) {
         this.editedIndex = this.games.indexOf(item)
         this.editedItem = Object.assign({}, item)
-        this.dialog = true
+        this.dialogEdit = true
       },
 
       deleteItem (item) {
@@ -263,6 +407,7 @@ import axios from 'axios'
 
       close () {
         this.dialog = false
+        this.dialogEdit = false
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
