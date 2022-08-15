@@ -1,10 +1,6 @@
-<template>
-  <v-row justify="space-around">
-    <v-col cols="auto">
-     <v-spacer></v-spacer>
-        <v-dialog
-          v-model="dialog"
-          max-width="500px"
+<template> 
+  <v-dialog
+         max-width="500px"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -38,11 +34,8 @@
               >Close</v-btn>
             </v-card-actions>
           </v-card>
-
-      </v-dialog>
-    </v-col>
-</v-row>
-</template>
+        </v-dialog>
+    </template>
 <script>
 
 export default {

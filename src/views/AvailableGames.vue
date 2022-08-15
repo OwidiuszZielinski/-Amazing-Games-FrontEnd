@@ -1,16 +1,14 @@
 <template>
 
-<v-container  fill-height >
-
+<v-container fill-height >
+<v-row>
 <GameCard v-for="game in games" :key="game.id"
   :title ="game.title"
   :type ="game.type"
   :rating ="game.rating"
   :price ="game.price"
-
   :description="game.description"/>
-
-  
+</v-row>
 </v-container>
 </template>
 <script>
@@ -35,5 +33,6 @@ export default {
     GameCard
 }
 }
+
 
 </script>
