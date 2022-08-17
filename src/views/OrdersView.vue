@@ -1,8 +1,8 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="desserts"
-    sort-by="calories"
+    :items="orders"
+    
     class="elevation-1"
   >
     <template v-slot:top>
@@ -28,12 +28,13 @@
               v-bind="attrs"
               v-on="on"
             >
-              New Item
+              NEW ORDER
             </v-btn>
           </template>
+          
           <v-card>
             <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
+              <span class="text-h5">{{formTitle}}</span>
             </v-card-title>
 
             <v-card-text>
@@ -45,8 +46,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.name"
-                      label="Dessert name"
+                      v-model="editedOrder.id"
+                      label="title"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -55,8 +56,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.calories"
-                      label="Calories"
+                      v-model="editedOrder.status"
+                      label="type"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -65,8 +66,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.fat"
-                      label="Fat (g)"
+                      v-model="editedOrder.user_id"
+                      label="price"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -75,19 +76,36 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.carbs"
-                      label="Carbs (g)"
+                      v-model="editedOrder.rating"
+                      label="rating"
                     ></v-text-field>
                   </v-col>
-                  <v-col
+                 <v-col
                     cols="12"
                     sm="6"
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.protein"
-                      label="Protein (g)"
+                      v-model="editedOrder.description"
+                      label="description"
                     ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedOrder.availability"
+                      label="availability"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    
                   </v-col>
                 </v-row>
               </v-container>
@@ -103,94 +121,227 @@
                 Cancel
               </v-btn>
               <v-btn
+                
+                class="btn btn-primary"
                 color="blue darken-1"
                 text
                 @click="save"
+                
               >
                 Save
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
+        
+
+        <v-dialog
+          v-model="dialogEdit"
+          max-width="500px"
+        > 
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">EDIT ORDER</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedOrder.title"
+                      label="title"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedOrder.type"
+                      label="type"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedOrder.price"
+                      label="price"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedOrder.rating"
+                      label="rating"
+                    ></v-text-field>
+                  </v-col>
+                 <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedOrder.description"
+                      label="description"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedOrder.availability"
+                      label="availability"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="close"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                
+                class="btn btn-primary"
+                color="blue darken-1"
+                text
+                @click="saveEdit(editedOrder)"
+                
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="text-h5">Are you sure you want to delete this order?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteOrderConfirm">OK</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-toolbar>
     </template>
-   <template v-slot:[`item.actions`]="{ item }">
+   <template v-slot:[`item.actions`]="{ order }">
       <v-icon
         small
         class="mr-2"
-        @click="editItem(item)"
+        @click="editedOrder(order)"
       >
         mdi-pencil
       </v-icon>
       <v-icon
         small
-        @click="deleteItem(item)"
+        @click="deleteOrder(order)"
       >
         mdi-delete
       </v-icon>
     </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
+  
   </v-data-table>
 </template>
 
 <script>
+import axios from 'axios'
+ 
+
   export default {
     data: () => ({
       
       dialog: false,
       dialogDelete: false,
+      dialogEdit: false,
       headers: [
         {
-          text: 'Dessert (100g serving)',
+          text: 'ID',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'id',
+          description: 'description',
+          availability: 'availability',
+         
         },
-        { text: 'Calories', value: 'calories' },
-        { text: 'Fat (g)', value: 'fat' },
-        { text: 'Carbs (g)', value: 'carbs' },
-        { text: 'Protein (g)', value: 'protein' },
+        { text: 'Date', value: 'date'},
+        {text: 'Value',value : 'value'},
+        { text: 'User ID', value: 'user.id' },
+        { text: 'Status', value: 'status' },
+        { text: 'Games ID', value: 'gamesEntities' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
-      desserts: [],
+      orders: [],
+
+
       editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+      editedOrder: {
+        
+        user: '',
+        orders: '',
+        status: '',
+        timestamp: '',
+        
+       
+        
+
+        
       },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+      defaultorder: {
+        user: '',
+        orders: '',
+        status: '',
+        timestamp: '',
+     
+        
       },
     }),
-
+    
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? 'ADD ORDER' : 'Edit Order'
       },
     },
 
@@ -201,109 +352,56 @@
       dialogDelete (val) {
         val || this.closeDelete()
       },
+      dialogEdit (val) {
+        val || this.closeDelete()
+      },
     },
 
     created () {
-      this.initialize()
-    },
-
+    axios
+    
+      .get('http://192.168.1.107:8082/orders')
+      .then(response => (this.orders = response.data))
+    },  
+ 
+  
     methods: {
-      initialize () {
-        this.desserts = [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-          },
-        ]
+      
+      
+      saveEdit(order){
+        axios.patch(`http://192.168.1.107:8082/orders/`+order.id ,this.editedOrder)
+        .then(response => {
+         console.log(response);
+     });
+      this.close()
+      },
+      
+      editOrder (order) {
+        this.editedIndex = this.orders.indexOf(order)
+        this.editedOrder = Object.assign({}, order)
+        this.dialogEdit = true
       },
 
-      editItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
-      },
-
-      deleteItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
+      deleteorder (order) {
+        
+        axios.delete(`http://192.168.1.107:8082/orders/` + order.id )
+        .then(response => {
+         console.log(response);
+     });
+        
         this.dialogDelete = true
       },
 
-      deleteItemConfirm () {
-        this.desserts.splice(this.editedIndex, 1)
+      deleteorderConfirm () {
+        this.orders.splice(this.editedIndex, 1)
         this.closeDelete()
       },
 
       close () {
         this.dialog = false
+        this.dialogEdit = false
         this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedorder = Object.assign({}, this.defaultorder)
           this.editedIndex = -1
         })
       },
@@ -311,19 +409,24 @@
       closeDelete () {
         this.dialogDelete = false
         this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedorder = Object.assign({}, this.defaultorder)
           this.editedIndex = -1
         })
       },
 
       save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        } else {
-          this.desserts.push(this.editedItem)
-        }
+        
+          axios.post('http://192.168.1.107:8082/orders/',this.editedorder).then((response)=>{
+          console.log(response);
+          });
+         
         this.close()
       },
     },
-  }
+    }
+  
+  
+    
+  
+  
 </script>
