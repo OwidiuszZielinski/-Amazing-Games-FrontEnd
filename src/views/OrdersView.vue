@@ -241,15 +241,10 @@
           </v-card>
         </v-dialog>
 
-
-
-
-
-
-
-
-
-
+      <div 
+      v-for="order in orders" :key="order.id">
+        <p>{{order.gamesEntities}}</p>
+      </div>
 
 
 
@@ -292,7 +287,7 @@ import axios from 'axios'
 
   export default {
     data: () => ({
-      
+      text:'',
       dialog: false,
       dialogDelete: false,
       dialogEdit: false,
@@ -314,7 +309,7 @@ import axios from 'axios'
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       orders: [],
-
+      games: [],
 
       editedIndex: -1,
       editedOrder: {
@@ -338,6 +333,8 @@ import axios from 'axios'
         
       },
     }),
+     
+     props:['gamesEntities'],
     
     computed: {
       formTitle () {
@@ -361,12 +358,12 @@ import axios from 'axios'
     axios
     
       .get('http://192.168.1.107:8082/orders')
-      .then(response => (this.orders = response.data))
+      .then(response => (this.orders= response.data))
     },  
- 
+   
+    
   
     methods: {
-      
       
       saveEdit(order){
         axios.patch(`http://192.168.1.107:8082/orders/`+order.id ,this.editedOrder)
