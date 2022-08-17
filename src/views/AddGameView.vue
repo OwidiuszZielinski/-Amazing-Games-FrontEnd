@@ -105,10 +105,7 @@
                     sm="6"
                     md="4"
                   >
-                    <v-text-field
-                      v-model="editedItem.quantity"
-                      label="quantity"
-                    ></v-text-field>
+                    
                   </v-col>
                 </v-row>
               </v-container>
@@ -149,7 +146,7 @@
         > 
           <v-card>
             <v-card-title>
-              <span class="text-h5">NEW DIALOG</span>
+              <span class="text-h5">EDIT GAME</span>
             </v-card-title>
 
             <v-card-text>
@@ -220,10 +217,7 @@
                     sm="6"
                     md="4"
                   >
-                    <v-text-field
-                      v-model="editedItem.quantity"
-                      label="quantity"
-                    ></v-text-field>
+                    
                   </v-col>
                 </v-row>
               </v-container>
@@ -315,14 +309,13 @@ import axios from 'axios'
           value: 'title',
           description: 'description',
           availability: 'availability',
-          quantity: 'quantity'
+         
         },
         { text: 'Type', value: 'type' },
         { text: 'Price ($)', value: 'price' },
         { text: 'Rating (/10)', value: 'rating' },
         { text: 'Description', value: 'description' },
         { text: 'Availability', value: 'availability' },
-        { text: 'Quantity', value: 'quantity' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       games: [],
@@ -335,7 +328,7 @@ import axios from 'axios'
         rating: '',
         description: '',
         availability: true,
-        quantity: 0
+        
 
         
       },
@@ -346,7 +339,7 @@ import axios from 'axios'
         rating: '',
         description: '',
         availability: true,
-        quantity: 0
+     
         
       },
     }),
