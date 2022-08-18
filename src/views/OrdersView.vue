@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="orders"
-    
+   
     class="elevation-1"
   >
     <template v-slot:top>
@@ -358,14 +358,15 @@ import axios from 'axios'
     methods: {
 
       orderGames(orderlist){
-        var gameIds = []
-        console.log(orderlist)
+        
         for (const order of orderlist){
+          var gameIds = []
           for (const game of order.gamesEntities){
-          gameIds.push(game.id)
-          console.log(gameIds.join(","))}
+          gameIds.push(" [ " + game.id + " ] ")
+          } 
           order.gameIds = gameIds.join(",")
         }
+        
       },
       
       saveEdit(order){
