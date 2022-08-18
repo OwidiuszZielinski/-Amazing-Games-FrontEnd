@@ -241,13 +241,6 @@
           </v-card>
         </v-dialog>
 
-      <div 
-      v-for="order in orders" :key="order.id">
-        <p>{{order.gamesEntities}}</p>
-      </div>
-
-
-
 
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
@@ -283,11 +276,10 @@
 
 <script>
 import axios from 'axios'
- 
+
 
   export default {
     data: () => ({
-      text:'',
       dialog: false,
       dialogDelete: false,
       dialogEdit: false,
@@ -305,11 +297,10 @@ import axios from 'axios'
         {text: 'Value',value : 'value'},
         { text: 'User ID', value: 'user.id' },
         { text: 'Status', value: 'status' },
-        { text: 'Games ID', value: 'gamesEntities' },
+        { text: 'Games ID', value: 'gameIds' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       orders: [],
-      games: [],
 
       editedIndex: -1,
       editedOrder: {
@@ -334,7 +325,7 @@ import axios from 'axios'
       },
     }),
      
-     props:['gamesEntities'],
+  
     
     computed: {
       formTitle () {
@@ -358,12 +349,24 @@ import axios from 'axios'
     axios
     
       .get('http://192.168.1.107:8082/orders')
-      .then(response => (this.orders= response.data))
+      .then(response => (this.orders= response.data,
+      this.orderGames(this.orders)))
     },  
    
     
   
     methods: {
+
+      orderGames(orderlist){
+        var gameIds = []
+        console.log(orderlist)
+        for (const order of orderlist){
+          for (const game of order.gamesEntities){
+          gameIds.push(game.id)
+          console.log(gameIds.join(","))}
+          order.gameIds = gameIds.join(",")
+        }
+      },
       
       saveEdit(order){
         axios.patch(`http://192.168.1.107:8082/orders/`+order.id ,this.editedOrder)
