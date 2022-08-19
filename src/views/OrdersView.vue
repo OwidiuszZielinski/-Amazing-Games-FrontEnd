@@ -27,8 +27,9 @@
               class="mb-2"
               v-bind="attrs"
               v-on="on"
+              
             >
-              NEW ORDER
+              NEW ORDER <h1>{{editedOrder.games[0]}}</h1>
             </v-btn>
           </template>
           
@@ -46,18 +47,9 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedOrder.id"
-                      label="title"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
+                      
                       v-model="editedOrder.status"
-                      label="type"
+                      label="status"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -66,8 +58,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedOrder.user_id"
-                      label="price"
+                      v-model="editedOrder.user"
+                      label="user"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -76,36 +68,9 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedOrder.rating"
-                      label="rating"
+                      v-model="editedOrder.gamesedit"
+                      label="games"
                     ></v-text-field>
-                  </v-col>
-                 <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedOrder.description"
-                      label="description"
-                    ></v-text-field>
-                  </v-col>
-                   <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedOrder.availability"
-                      label="availability"
-                    ></v-text-field>
-                  </v-col>
-                   <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    
                   </v-col>
                 </v-row>
               </v-container>
@@ -125,9 +90,11 @@
                 class="btn btn-primary"
                 color="blue darken-1"
                 text
+                
                 @click="save"
                 
               >
+              
                 Save
               </v-btn>
             </v-card-actions>
@@ -146,25 +113,15 @@
 
             <v-card-text>
               <v-container>
-                <v-row>
+                 <v-row>
                   <v-col
                     cols="12"
                     sm="6"
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedOrder.title"
-                      label="title"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedOrder.type"
-                      label="type"
+                      v-model="editedOrder.status"
+                      label="status"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -173,8 +130,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedOrder.price"
-                      label="price"
+                      v-model="editedOrder.user_id"
+                      label="user"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -183,36 +140,9 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedOrder.rating"
-                      label="rating"
+                      v-model="editedOrder.gameIds"
+                      label="games"
                     ></v-text-field>
-                  </v-col>
-                 <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedOrder.description"
-                      label="description"
-                    ></v-text-field>
-                  </v-col>
-                   <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedOrder.availability"
-                      label="availability"
-                    ></v-text-field>
-                  </v-col>
-                   <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    
                   </v-col>
                 </v-row>
               </v-container>
@@ -240,8 +170,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-
-
+      <h1></h1>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5">Are you sure you want to delete this order?</v-card-title>
@@ -255,17 +184,17 @@
         </v-dialog>
       </v-toolbar>
     </template>
-   <template v-slot:[`item.actions`]="{ order }">
+   <template v-slot:[`item.actions`]="{ item }">
       <v-icon
         small
         class="mr-2"
-        @click="editedOrder(order)"
+        @click="editOrder(item)"
       >
         mdi-pencil
       </v-icon>
       <v-icon
         small
-        @click="deleteOrder(order)"
+        @click="deleteOrder(item)"
       >
         mdi-delete
       </v-icon>
@@ -300,26 +229,25 @@ import axios from 'axios'
         { text: 'Games ID', value: 'gameIds' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
+      
       orders: [],
-
       editedIndex: -1,
+      
       editedOrder: {
-        
+        games: [],
         user: '',
-        orders: '',
         status: '',
-        timestamp: '',
+        date: ' ',
         
-       
         
 
         
       },
       defaultorder: {
+        
         user: '',
-        orders: '',
         status: '',
-        timestamp: '',
+        date: ' ',
      
         
       },
@@ -331,6 +259,9 @@ import axios from 'axios'
       formTitle () {
         return this.editedIndex === -1 ? 'ADD ORDER' : 'Edit Order'
       },
+      
+     
+      
     },
 
     watch: {
@@ -346,19 +277,25 @@ import axios from 'axios'
     },
 
     created () {
+        
+
     axios
     
       .get('http://192.168.1.107:8082/orders')
       .then(response => (this.orders= response.data,
       this.orderGames(this.orders)))
+    
     },  
    
     
   
     methods: {
 
+      getGames(){
+      
+      },
+
       orderGames(orderlist){
-        
         for (const order of orderlist){
           var gameIds = []
           for (const game of order.gamesEntities){
@@ -383,7 +320,7 @@ import axios from 'axios'
         this.dialogEdit = true
       },
 
-      deleteorder (order) {
+      deleteOrder (order) {
         
         axios.delete(`http://192.168.1.107:8082/orders/` + order.id )
         .then(response => {
@@ -393,7 +330,7 @@ import axios from 'axios'
         this.dialogDelete = true
       },
 
-      deleteorderConfirm () {
+      deleteOrderConfirm () {
         this.orders.splice(this.editedIndex, 1)
         this.closeDelete()
       },
@@ -402,7 +339,7 @@ import axios from 'axios'
         this.dialog = false
         this.dialogEdit = false
         this.$nextTick(() => {
-          this.editedorder = Object.assign({}, this.defaultorder)
+          this.editedOrder = Object.assign({}, this.defaultorder)
           this.editedIndex = -1
         })
       },
@@ -410,14 +347,14 @@ import axios from 'axios'
       closeDelete () {
         this.dialogDelete = false
         this.$nextTick(() => {
-          this.editedorder = Object.assign({}, this.defaultorder)
+          this.editedOrder = Object.assign({}, this.defaultorder)
           this.editedIndex = -1
         })
       },
 
       save () {
         
-          axios.post('http://192.168.1.107:8082/orders/',this.editedorder).then((response)=>{
+          axios.post('http://192.168.1.107:8082/orders/',this.editedOrder).then((response)=>{
           console.log(response);
           });
          
