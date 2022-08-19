@@ -29,7 +29,7 @@
               v-on="on"
               
             >
-              NEW ORDER <h1>{{editedOrder.games[0]}}</h1>
+              NEW ORDER <h1>{{newOrderGames}}</h1>
             </v-btn>
           </template>
           
@@ -48,7 +48,7 @@
                   >
                     <v-text-field
                       
-                      v-model="editedOrder.status"
+                      v-model="newOrder.status"
                       label="status"
                     ></v-text-field>
                   </v-col>
@@ -58,7 +58,7 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedOrder.user"
+                      v-model="newOrder.user"
                       label="user"
                     ></v-text-field>
                   </v-col>
@@ -67,8 +67,9 @@
                     sm="6"
                     md="4"
                   >
-                    <v-text-field
-                      v-model="editedOrder.gamesedit"
+                    <v-text-field 
+                     v-model="newOrderGames"
+                    
                       label="games"
                     ></v-text-field>
                   </v-col>
@@ -90,7 +91,7 @@
                 class="btn btn-primary"
                 color="blue darken-1"
                 text
-                
+                v-on:click="newOrder.games =(newOrderGames.split(','))"
                 @click="save"
                 
               >
@@ -100,7 +101,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        
+
 
         <v-dialog
           v-model="dialogEdit"
@@ -140,7 +141,7 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedOrder.gameIds"
+                      v-model="editGames"
                       label="games"
                     ></v-text-field>
                   </v-col>
@@ -153,6 +154,7 @@
               <v-btn
                 color="blue darken-1"
                 text
+              
                 @click="close"
               >
                 Cancel
@@ -162,6 +164,7 @@
                 class="btn btn-primary"
                 color="blue darken-1"
                 text
+                v-on:click="editedOrder.games =(editGames.split(','))"
                 @click="saveEdit(editedOrder)"
                 
               >
@@ -229,18 +232,22 @@ import axios from 'axios'
         { text: 'Games ID', value: 'gameIds' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
-      
+      editGames: '',
       orders: [],
       editedIndex: -1,
-      
-      editedOrder: {
+      newOrderGames: '',
+      newOrder: {
         games: [],
         user: '',
         status: '',
         date: ' ',
         
-        
-
+      },
+      editedOrder: {
+        games: [],
+        user: '',
+        status: '',
+        date: ' ',
         
       },
       defaultorder: {
@@ -277,6 +284,7 @@ import axios from 'axios'
     },
 
     created () {
+     
         
 
     axios
@@ -286,14 +294,13 @@ import axios from 'axios'
       this.orderGames(this.orders)))
     
     },  
-   
+
     
   
     methods: {
-
-      getGames(){
       
-      },
+
+    
 
       orderGames(orderlist){
         for (const order of orderlist){
@@ -339,7 +346,7 @@ import axios from 'axios'
         this.dialog = false
         this.dialogEdit = false
         this.$nextTick(() => {
-          this.editedOrder = Object.assign({}, this.defaultorder)
+          this.newOrder = Object.assign({}, this.defaultorder)
           this.editedIndex = -1
         })
       },
@@ -347,22 +354,21 @@ import axios from 'axios'
       closeDelete () {
         this.dialogDelete = false
         this.$nextTick(() => {
-          this.editedOrder = Object.assign({}, this.defaultorder)
+          this.newOrder = Object.assign({}, this.defaultorder)
           this.editedIndex = -1
         })
       },
 
       save () {
         
-          axios.post('http://192.168.1.107:8082/orders/',this.editedOrder).then((response)=>{
+          axios.post('http://192.168.1.107:8082/orders/',this.newOrder).then((response)=>{
           console.log(response);
           });
          
         this.close()
       },
     },
-    }
-  
+  }
   
     
   
