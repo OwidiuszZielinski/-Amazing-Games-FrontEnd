@@ -29,7 +29,7 @@
               v-on="on"
               
             >
-              NEW ORDER <h1>{{newOrderGames}}</h1>
+              NEW ORDER 
             </v-btn>
           </template>
           
@@ -109,7 +109,7 @@
         > 
           <v-card>
             <v-card-title>
-              <span class="text-h5">EDIT ORDER</span>
+              <span class="text-h5">EDIT ORDER <h3>{{editedOrder}}</h3></span>
             </v-card-title>
 
             <v-card-text>
@@ -122,7 +122,7 @@
                   >
                     <v-text-field
                       v-model="editedOrder.status"
-                      label="status"
+                       label="status"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -131,8 +131,9 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedOrder.user_id"
+                      v-model="editedOrder.user"
                       label="user"
+                      
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -164,6 +165,7 @@
                 class="btn btn-primary"
                 color="blue darken-1"
                 text
+                
                 v-on:click="editedOrder.games =(editGames.split(','))"
                 @click="saveEdit(editedOrder)"
                 
@@ -209,7 +211,6 @@
 <script>
 import axios from 'axios'
 
-
   export default {
     data: () => ({
       dialog: false,
@@ -232,6 +233,7 @@ import axios from 'axios'
         { text: 'Games ID', value: 'gameIds' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
+      editUser: '',
       editGames: '',
       orders: [],
       editedIndex: -1,
@@ -244,18 +246,18 @@ import axios from 'axios'
         
       },
       editedOrder: {
+        id: '',
         games: [],
         user: '',
         status: '',
-        date: ' ',
+        date: '',
         
-      },
-      defaultorder: {
-        
+      }, 
+      defaultOrder: {
+        games: [],
         user: '',
         status: '',
-        date: ' ',
-     
+        date: '',
         
       },
     }),
@@ -300,8 +302,6 @@ import axios from 'axios'
     methods: {
       
 
-    
-
       orderGames(orderlist){
         for (const order of orderlist){
           var gameIds = []
@@ -323,7 +323,13 @@ import axios from 'axios'
       
       editOrder (order) {
         this.editedIndex = this.orders.indexOf(order)
-        this.editedOrder = Object.assign({}, order)
+        this.editedOrder.id = Object.assign(order.id)
+        this.editedOrder.games = Object.assign(order.gamesEntities)
+        this.editedOrder.user = Object.assign(order.user.id)
+        this.editedOrder.date = Object.assign(order.date)
+        this.editedOrder.status = Object.assign(order.status)
+        
+
         this.dialogEdit = true
       },
 
@@ -346,7 +352,6 @@ import axios from 'axios'
         this.dialog = false
         this.dialogEdit = false
         this.$nextTick(() => {
-          this.newOrder = Object.assign({}, this.defaultorder)
           this.editedIndex = -1
         })
       },
@@ -354,7 +359,6 @@ import axios from 'axios'
       closeDelete () {
         this.dialogDelete = false
         this.$nextTick(() => {
-          this.newOrder = Object.assign({}, this.defaultorder)
           this.editedIndex = -1
         })
       },
