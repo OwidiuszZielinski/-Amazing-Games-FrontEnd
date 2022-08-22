@@ -26,7 +26,7 @@
                   </v-col>
                   <v-col>
                      <!-- <v-text-field v-model="newOrder.user" :propuser="newOrder.user" label="User"></v-text-field> --> 
-                    <UserList v-model="newOrder.user" :propuser ="newOrder.user" label="User" /> -->
+                    <UserList v-model="newOrder.user" :propuser ="newOrder.user" label="User" /> 
                   </v-col>
                 <v-col>
                   <GameList v-model="newOrderGames" :propgames="newOrderGames" />
@@ -186,7 +186,7 @@ export default {
     axios
       .get(`${this.$apiurl}/orders/`)
       .then(response => (this.orders = response.data,
-        this.orderGames(this.orders)));
+        this.orderGames(this.orders))).catch((err) => console.log(err));
   },
   methods: {
     orderGames(orderlist) {
@@ -224,6 +224,7 @@ export default {
     deleteOrderConfirm() {
       this.orders.splice(this.editedIndex, 1);
       this.closeDelete();
+      this.$router.go(0);
     },
     close() {
       this.dialog = false;

@@ -386,6 +386,7 @@ import axios from 'axios'
       deleteItemConfirm () {
         this.games.splice(this.editedIndex, 1)
         this.closeDelete()
+        this.$router.go(0);
       },
 
       close () {
