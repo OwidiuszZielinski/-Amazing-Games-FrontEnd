@@ -1,11 +1,12 @@
-<template >
-    <v-main>
+<template fill-height>
+    <v-container>
         <v-autocomplete v-model="OrderGames" :items="games" @change="getId()" item-text="title" clearable multiple
             label="Games" required return-object>
         </v-autocomplete>
         <h1>{{ propgames }}</h1>
-    </v-main>
+    </v-container>
 </template>
+
 
 <script>
 import axios from 'axios'
@@ -31,7 +32,7 @@ export default {
     created() {
 
         axios
-            .get('http://192.168.1.107:8082/games')
+            .get(`${this.$apiurl}/games/`)
             .then(response => (this.games = response.data));
     },
 
