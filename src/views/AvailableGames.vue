@@ -26,7 +26,7 @@ export default {
   },
   created () {
     axios
-      .get('http://192.168.1.107:8082/games')
+      .get(`${this.$apiurl}/games/`)
       .then(response => (this.games = response.data))
   },
   components: {

@@ -249,16 +249,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
@@ -363,14 +353,14 @@ import axios from 'axios'
 
     created () {
     axios
-      .get('http://192.168.1.107:8082/games')
+      .get(`${this.$apiurl}/games/`)
       .then(response => (this.games = response.data))
   },
 
     methods: {
       
       saveEdit(item){
-        axios.patch(`http://192.168.1.107:8082/games/`+item.id ,this.editedItem)
+        axios.patch(`${this.$apiurl}/games/${item.id}`,this.editedItem)
         .then(response => {
          console.log(response);
      });
@@ -385,7 +375,7 @@ import axios from 'axios'
 
       deleteItem (item) {
         
-        axios.delete(`http://192.168.1.107:8082/games/` + item.id )
+        axios.delete(`${this.$apiurl}/games/${item.id}`)
         .then(response => {
          console.log(response);
      });
@@ -396,6 +386,7 @@ import axios from 'axios'
       deleteItemConfirm () {
         this.games.splice(this.editedIndex, 1)
         this.closeDelete()
+        this.$router.go(0);
       },
 
       close () {
@@ -417,7 +408,7 @@ import axios from 'axios'
 
       save () {
         
-          axios.post('http://192.168.1.107:8082/games/',this.editedItem).then((response)=>{
+          axios.post(`${this.$apiurl}/games/`,this.editedItem).then((response)=>{
           console.log(response);
           });
          
