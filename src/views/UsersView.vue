@@ -24,7 +24,9 @@
                     <v-text-field v-model="editedUser.email" label="E-MAIL"></v-text-field>
                   </v-col>
                   <v-col  >
-                    <v-text-field v-model="editedUser.accesslevel" label="AccessLevel"></v-text-field>
+                  
+                    <v-autocomplete v-model="editedUser.accesslevel" :items="accesslevelArray" label="AccessLevel" clearable></v-autocomplete>
+                  
                   </v-col>
                   
              
@@ -98,7 +100,7 @@ export default {
       { text: 'Actions', value: 'actions', sortable: false },
     ],
      users: [],
-    availabilityArray: ['true','false'],
+     accesslevelArray: ['user','admin'],
     editedIndex: -1,
     editedUser: {
 

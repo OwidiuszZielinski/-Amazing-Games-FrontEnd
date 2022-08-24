@@ -1,31 +1,35 @@
 <template fill-height>
     <v-container>
-        <v-autocomplete  v-model="statusList[0]" :items="statusList" @change="getStatus()" clearable 
-            label="Status">
+        <v-autocomplete  v-model="status" :items="statuses" item-text="stat"  @change="getStatus()" clearable 
+            label="Status" return-object>
         </v-autocomplete>
+        <h1>{{status}}</h1>
     </v-container>
 </template>
 
-
 <script>
-
-
-
 export default {
     data() {
         return {
             status: '',
-            statusList: ['STARTED','IN-PROGRESS','POSTED','CANCELED','ENDED'],
-
+            statuses: [
+                {id: '0', stat: 'STARTED'},
+                {id: '1', stat: 'IN-PROGRESS'},
+                {id: '2', stat: 'POSTED'},
+                {id: '3', stat: 'CANCELED'},
+                {id: '4', stat: 'ENDED'},
+                ],
 
         }
     },
     props: ['propstatus'],
+    model: { props: 'propstatus', event: 'sendStatusID' },
 
     methods: {
 
         getStatus() {
-            this.$emit('sendStatus', this.status)
+               
+            this.$emit('sendStatusID', this.status)
 
         }
     }

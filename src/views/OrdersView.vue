@@ -8,7 +8,7 @@
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              NEW ORDER
+              NEW ORDER {{newOrder.status.id}}
 
             </v-btn>
           </template>
@@ -37,7 +37,7 @@
               <v-btn color="blue darken-1" text @click="close">
                 Cancel
               </v-btn>
-              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="newOrder.games = newOrderGames"
+              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="(newOrder.games = newOrderGames); (newOrder.status = newOrder.status.id)"
                 @click="save">
 
                 Save
@@ -74,7 +74,8 @@
               <v-btn color="blue darken-1" text @click="close">
                 Cancel
               </v-btn>
-              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="(editedOrder.games = editGames); (editedOrder.user = editedOrder.user.id)" 
+              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="(editedOrder.games = editGames); 
+              (editedOrder.user = editedOrder.user.id);(editedOrder.status = editedOrder.status.id)" 
                 @click="saveEdit(editedOrder)">
                 Save
               </v-btn>
@@ -135,10 +136,17 @@ export default {
       { text: "Value", value: "value" },
       { text: "User ID", value: "user.username"},
       { text: "Status", value: "status"},
-      { text: "Games ID", value: "gameTitles" },
+      { text: "Games ID", value: "gameTitles"},
       { text: "Actions", value: "actions", sortable: false },
     ],
-
+  
+    statuses: [
+                {id: '0', stat: 'STARTED'},
+                {id: '1', stat: 'IN-PROGRESS'},
+                {id: '2', stat: 'POSTED'},
+                {id: '3', stat: 'CANCELED'},
+                {id: '4', stat: 'ENDED'},
+                ],
     editUser: "",
     editGames: [],
     orders: [],
@@ -147,7 +155,7 @@ export default {
     newOrder: {
       games: [],
       user: "",
-      status: '',
+      status: "",
       date: "",
     },
     editedOrder: {
@@ -179,16 +187,20 @@ export default {
     axios
       .get(`${this.$apiurl}/orders/`)
       .then(response => (this.orders = response.data,
-        this.orderGames(this.orders))).catch((err) => console.log(err));
+        this.orderGames(this.orders),this.showStatus(this.orders))).catch((err) => console.log(err));
   },
   methods: {
-    editOrderGames(ordergamelist) {
-      var editGameID = [];
-        for (const game of ordergamelist) {
-          editGameID.push(game.id);
-        }
-        return editGameID
+    
+    showStatus(orderlist){
+     
+      for (const order of orderlist) {
+        var orderStat = this.statuses[order.status].stat
+          console.log(orderStat)
+          order.status = orderStat
+      }
+      
     },
+
     orderGames(orderlist) {
       for (const order of orderlist) {
         var gameTitles = [];
