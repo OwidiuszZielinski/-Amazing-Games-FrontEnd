@@ -150,6 +150,7 @@ import router from '@/router'
     methods: {
         route(ln) {
             router.push(ln);
+            
         }
     }
 }

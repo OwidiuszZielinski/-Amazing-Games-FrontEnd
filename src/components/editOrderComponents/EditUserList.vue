@@ -1,8 +1,9 @@
 <template fill-height>
     <v-container>
-        <v-autocomplete v-model="userId" :items="users" @change="getId()" item-text="username" clearable 
+        <v-autocomplete v-model="user" :items="Users" @change="getId()" item-text="username" clearable 
             label="User" required return-object>
         </v-autocomplete>
+        
     </v-container>
 </template>
 
@@ -14,10 +15,8 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            userId: '',
-            users: [],
-
-
+            user: this.propuseredit,
+            Users: [],
 
         }
     },
@@ -31,15 +30,15 @@ export default {
 
         axios
             .get(this.$apiurl +'/users')
-            .then(response => (this.users = response.data));
+            .then(response => (this.Users = response.data));
     },
 
 
     methods: {
 
         getId() {
-            
-            this.$emit('sendId', this.userId.id)
+             
+            this.$emit('sendId', this.user)
 
         }
     }

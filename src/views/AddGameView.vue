@@ -18,31 +18,25 @@
             </v-card-title>
 
             <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.title" label="title"></v-text-field>
+             
+                  <v-col  >
+                    <v-text-field v-model="editedItem.title" label="Title"></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.type" label="type"></v-text-field>
+                  <v-col  >
+                    <v-text-field v-model="editedItem.type" label="Type"></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.price" label="price"></v-text-field>
+                  <v-col  >
+                    
+                    <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.rating" label="rating"></v-text-field>
+                  <v-col  >
+                    <v-text-field v-model="editedItem.rating" label="Rating"></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.description" label="description"></v-text-field>
+                  <v-col  >
+                    <v-textarea v-model="editedItem.description" label="Description"></v-textarea>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.availability" label="availability"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-
-                  </v-col>
-                </v-row>
-              </v-container>
+                  
+              
             </v-card-text>
 
             <v-card-actions>
@@ -70,31 +64,29 @@
             </v-card-title>
 
             <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.title" label="title" required></v-text-field>
+              
+                  <v-col  >
+                    <v-text-field v-model="editedItem.title" label="Title" required></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.type" label="type"></v-text-field>
+                  <v-col  >
+                    <v-text-field v-model="editedItem.type" label="Type"></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.price" label="price"></v-text-field>
+                  <v-col  >
+                    <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.rating" label="rating"></v-text-field>
+                  <v-col  >
+                    <v-text-field v-model="editedItem.rating" label="Rating"></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.description" label="description"></v-text-field>
+                  <v-col  >
+                    <v-textarea v-model="editedItem.description" label="Description"></v-textarea>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.availability" label="availability"></v-text-field>
+                  <v-col  >
+                    <v-autocomplete v-model="editedItem.availability" :items="availabilityArray" label="Availability" clearable></v-autocomplete>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col  >
 
                   </v-col>
-                </v-row>
-              </v-container>
+             
             </v-card-text>
 
             <v-card-actions>
@@ -165,6 +157,7 @@ export default {
       { text: 'Actions', value: 'actions', sortable: false },
     ],
     games: [],
+    availabilityArray: ['true','false'],
     editedIndex: -1,
     editedItem: {
 

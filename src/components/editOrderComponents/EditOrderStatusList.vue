@@ -3,6 +3,7 @@
         <v-autocomplete v-model="status" :items="statusList" @change="getStatus()" clearable
             label="Status">
              </v-autocomplete>
+             <h4>{{status}}</h4>
     </v-container>
 </template>
 
@@ -11,7 +12,7 @@
 export default {
     data() {
         return {
-            status: '',
+            status: this.propstatusedit,
             statusList: ['STARTED','IN-PROGRESS','POSTED','CANCELED','ENDED'],
         }
     },

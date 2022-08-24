@@ -8,7 +8,7 @@
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              NEW ORDER <h4> {{ newOrderGames }}</h4>
+              NEW ORDER
 
             </v-btn>
           </template>
@@ -21,7 +21,7 @@
             <v-card-text>
 
               <v-col>
-                <OrderStatusList :propstatus="newOrder.status" @sendStatus="e => newOrder.status = e"></OrderStatusList>
+                <OrderStatusList :propstatus="newOrder.status" v-model="newOrder.status"></OrderStatusList>
               </v-col>
               <v-col>
                 <UserList v-model="newOrder.user" :propuser="newOrder.user" />
@@ -50,7 +50,7 @@
         <v-dialog v-model="dialogEdit" max-width="500px">
           <v-card>
             <v-card-title>
-              <span class="text-h5">EDIT ORDER <h4> {{ editGames }}</h4></span>
+              <span class="text-h5">EDIT ORDER {{editGames}}</span>
             </v-card-title>
 
             <v-card-text>
@@ -65,9 +65,7 @@
                 <EditOrderGameList v-model="editGames" :propgamesedit="editedOrder.games"></EditOrderGameList>
 
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-
-              </v-col>
+             
 
             </v-card-text>
 
@@ -76,7 +74,7 @@
               <v-btn color="blue darken-1" text @click="close">
                 Cancel
               </v-btn>
-              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="editedOrder.games = editGames"
+              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="(editedOrder.games = editGames); (editedOrder.user = editedOrder.user.id)" 
                 @click="saveEdit(editedOrder)">
                 Save
               </v-btn>
@@ -98,7 +96,7 @@
       </v-toolbar>
     </template>
     <template v-slot:[`item.actions`]="{ item }">
-      <v-icon small class="mr-2" @click="editOrder(item)">
+      <v-icon small class="mr-2" @click="editOrder(item)" >
         mdi-pencil
       </v-icon>
       <v-icon small @click="deleteOrder(item)">
@@ -149,7 +147,7 @@ export default {
     newOrder: {
       games: [],
       user: "",
-      status: "",
+      status: '',
       date: "",
     },
     editedOrder: {
@@ -159,12 +157,7 @@ export default {
       status: "",
       date: "",
     },
-    defaultOrder: {
-      games: [],
-      user: "",
-      status: "",
-      date: "",
-    },
+    
   }),
   computed: {
     formTitle() {
@@ -215,10 +208,10 @@ export default {
     editOrder(order) {
       this.editedIndex = this.orders.indexOf(order);
       this.editedOrder.id = Object.assign(order.id);
-      this.editGames = Object.assign(this.editOrderGames(order.gamesEntities));
-      this.editedOrder.user = Object.assign(order.user.id);
+      this.editedOrder.games = order.gamesEntities
+      this.editedOrder.user = order.user;
       this.editedOrder.date = Object.assign(order.date);
-      this.editedOrder.status = Object.assign(order.status);
+      this.editedOrder.status = order.status;
       this.dialogEdit = true;
     },
     deleteOrder(order) {
@@ -251,6 +244,7 @@ export default {
       axios.post(`${this.$apiurl}/orders/`, this.newOrder).then((response) => {
         console.log(response);
       });
+      
       this.close();
     },
   },
