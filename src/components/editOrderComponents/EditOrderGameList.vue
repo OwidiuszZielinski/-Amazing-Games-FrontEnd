@@ -4,7 +4,7 @@
             label="Games" return-object>
            
     </v-autocomplete>
-    <h1>{{OrderGames}}</h1>
+
     </v-container>
 </template>
 
