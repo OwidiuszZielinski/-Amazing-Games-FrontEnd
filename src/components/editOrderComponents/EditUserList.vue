@@ -1,7 +1,7 @@
 <template fill-height>
     <v-container>
         <v-autocomplete v-model="userId" :items="users" @change="getId()" item-text="username" clearable 
-            label="Users" required return-object>
+            label="User" required return-object>
         </v-autocomplete>
     </v-container>
 </template>
@@ -21,7 +21,7 @@ export default {
 
         }
     },
-    props: ['propuser'],
+    props: ['propuseredit'],
 
     model: { props: 'propuser', event: 'sendId' },
 
