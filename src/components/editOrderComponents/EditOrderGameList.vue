@@ -1,9 +1,10 @@
 <template fill-height>
     <v-container>
-        <v-autocomplete v-model="OrderGames" :items="games" @change="getId()" item-text="title" clearable multiple
-            label="Games" required return-object>
-        </v-autocomplete>
-        <h1>{{ propgames }}</h1>
+        <v-autocomplete v-model="OrderGames" :items="games" @change="getId()" item-text="title" item-value="id" clearable multiple
+            label="Games" return-object>
+           
+    </v-autocomplete>
+    <h1>{{tempIds}}</h1>
     </v-container>
 </template>
 
@@ -11,23 +12,17 @@
 <script>
 import axios from 'axios'
 
-
 export default {
     data() {
         return {
             OrderGames: [],
-            gameId: [],
             games: [],
-
-
 
         }
     },
-    props: ['selectedgames'],
+    props: ['propgamesedit'],
 
-    model: { props: 'selectedgames', event: 'sendIds' },
-
-
+    model: { props: 'propgamesedit', event: 'sendEditID' },
 
     created() {
 
@@ -38,8 +33,7 @@ export default {
 
 
     methods: {
-
-
+        
 
         getId() {
             var tempIds = []
@@ -47,7 +41,8 @@ export default {
                 tempIds.push(game.id)
 
             }
-            this.$emit('sendIds', tempIds)
+
+            this.$emit('sendEditID', tempIds)
 
         }
     },

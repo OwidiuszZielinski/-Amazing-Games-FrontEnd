@@ -8,29 +8,27 @@
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              NEW ORDER
+              NEW ORDER <h4> {{ newOrderGames }}</h4>
 
             </v-btn>
           </template>
 
           <v-card>
             <v-card-title>
-              <span class="text-h5">{{formTitle}}</span>
+              <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
 
             <v-card-text>
-              
-                
-                  <v-col>
-                    <OrderStatusList :propstatus="newOrder.status" @sendStatus="e => newOrder.status=e"></OrderStatusList>
-                  </v-col>
-                  <v-col>
-                     <!-- <v-text-field v-model="newOrder.user" :propuser="newOrder.user" label="User"></v-text-field> --> 
-                    <UserList v-model="newOrder.user" :propuser ="newOrder.user" label="User" /> 
-                  </v-col>
-                <v-col>
-                  <GameList v-model="newOrderGames" :propgames="newOrderGames" />
-                </v-col>
+
+              <v-col>
+                <OrderStatusList :propstatus="newOrder.status" @sendStatus="e => newOrder.status = e"></OrderStatusList>
+              </v-col>
+              <v-col>
+                <UserList v-model="newOrder.user" :propuser="newOrder.user" />
+              </v-col>
+              <v-col>
+                <GameList v-model="newOrderGames" :propgames="newOrderGames" />
+              </v-col>
 
             </v-card-text>
 
@@ -52,26 +50,25 @@
         <v-dialog v-model="dialogEdit" max-width="500px">
           <v-card>
             <v-card-title>
-              <span class="text-h5">EDIT ORDER <h3>{{ editedOrder }}</h3></span>
+              <span class="text-h5">EDIT ORDER <h4> {{ editGames }}</h4></span>
             </v-card-title>
 
             <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedOrder.status" label="status"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedOrder.user" label="user"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editGames" label="games"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
+              <v-col>
+                <EditOrderStatusList :propstatusedit="editedOrder.status" @sendStatus="e => editedOrder.status = e">
+                </EditOrderStatusList>
+              </v-col>
+              <v-col>
+                <EditUserList v-model="editedOrder.user" :propuseredit="editedOrder.user"> </EditUserList>
+              </v-col>
+              <v-col>
+                <EditOrderGameList v-model="editGames" :propgamesedit="editedOrder.games"></EditOrderGameList>
 
-                  </v-col>
-                </v-row>
-              </v-container>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+
+              </v-col>
+
             </v-card-text>
 
             <v-card-actions>
@@ -79,8 +76,8 @@
               <v-btn color="blue darken-1" text @click="close">
                 Cancel
               </v-btn>
-              <v-btn class="btn btn-primary" color="blue darken-1" text
-                v-on:click="editedOrder.games = (editGames.split(','))" @click="saveEdit(editedOrder)">
+              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="editedOrder.games = editGames"
+                @click="saveEdit(editedOrder)">
                 Save
               </v-btn>
             </v-card-actions>
@@ -114,9 +111,12 @@
 
 <script>
 import axios from 'axios'
-import GameList from '../components/GameList.vue'
-import UserList from '@/components/UserList.vue';
-import OrderStatusList from '@/components/OrderStatusList.vue';
+import GameList from '../components/newOrderComponents/GameList.vue'
+import UserList from '@/components/newOrderComponents/UserList.vue';
+import OrderStatusList from '@/components/newOrderComponents/OrderStatusList.vue';
+import EditOrderStatusList from '@/components/editOrderComponents/EditOrderStatusList.vue'
+import EditOrderGameList from '../components/editOrderComponents/EditOrderGameList.vue'
+import EditUserList from '../components/editOrderComponents/EditUserList.vue'
 
 
 export default {
@@ -135,14 +135,14 @@ export default {
       },
       { text: "Date", value: "date" },
       { text: "Value", value: "value" },
-      { text: "User ID", value: "user.id" },
-      { text: "Status", value: "status" },
-      { text: "Games ID", value: "gameIds" },
+      { text: "User ID", value: "user.username"},
+      { text: "Status", value: "status"},
+      { text: "Games ID", value: "gameTitles" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-    selectedgames: [],
+
     editUser: "",
-    editGames: "",
+    editGames: [],
     orders: [],
     editedIndex: -1,
     newOrderGames: [],
@@ -189,17 +189,24 @@ export default {
         this.orderGames(this.orders))).catch((err) => console.log(err));
   },
   methods: {
+    editOrderGames(ordergamelist) {
+      var editGameID = [];
+        for (const game of ordergamelist) {
+          editGameID.push(game.id);
+        }
+        return editGameID
+    },
     orderGames(orderlist) {
       for (const order of orderlist) {
-        var gameIds = [];
+        var gameTitles = [];
         for (const game of order.gamesEntities) {
-          gameIds.push(" [ " + game.id + " ] ");
+          gameTitles.push(" [ " + game.title + " ] ");
         }
-        order.gameIds = gameIds.join(",");
+        order.gameTitles = gameTitles.join(",");
       }
     },
     saveEdit(order) {
-      axios.patch(`${this.$apiurl}/orders/${order.id}`,this.editedOrder)
+      axios.patch(`${this.$apiurl}/orders/${order.id}`, this.editedOrder)
         .then(response => {
           console.log(response);
         });
@@ -208,7 +215,7 @@ export default {
     editOrder(order) {
       this.editedIndex = this.orders.indexOf(order);
       this.editedOrder.id = Object.assign(order.id);
-      this.editedOrder.games = Object.assign(order.gamesEntities);
+      this.editGames = Object.assign(this.editOrderGames(order.gamesEntities));
       this.editedOrder.user = Object.assign(order.user.id);
       this.editedOrder.date = Object.assign(order.date);
       this.editedOrder.status = Object.assign(order.status);
@@ -240,17 +247,13 @@ export default {
       });
     },
     save() {
-      console.log(this.selectedgames + "Twoja stara")
+
       axios.post(`${this.$apiurl}/orders/`, this.newOrder).then((response) => {
         console.log(response);
       });
       this.close();
     },
   },
-  components: { GameList, UserList, OrderStatusList }
+  components: { GameList, UserList, OrderStatusList, EditOrderStatusList, EditOrderGameList, EditUserList }
 }
-
-
-
-
 </script>
