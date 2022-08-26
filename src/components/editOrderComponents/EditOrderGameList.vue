@@ -4,7 +4,7 @@
             label="Games" return-object>
            
     </v-autocomplete>
-    <h1>{{tempIds}}</h1>
+
     </v-container>
 </template>
 
@@ -15,8 +15,9 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            OrderGames: [],
+            OrderGames: this.propgamesedit,
             games: [],
+            tempIds: []
 
         }
     },
@@ -25,17 +26,16 @@ export default {
     model: { props: 'propgamesedit', event: 'sendEditID' },
 
     created() {
-
+        
         axios
             .get(`${this.$apiurl}/games/`)
-            .then(response => (this.games = response.data));
+            .then(response => (this.games = response.data , this.getId()));
     },
 
 
     methods: {
         
-
-        getId() {
+            getId() {
             var tempIds = []
             for (const game of this.OrderGames) {
                 tempIds.push(game.id)
@@ -43,6 +43,7 @@ export default {
             }
 
             this.$emit('sendEditID', tempIds)
+
 
         }
     },

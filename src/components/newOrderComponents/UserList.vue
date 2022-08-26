@@ -3,6 +3,7 @@
         <v-autocomplete v-model="userId" :items="users" @change="getId()" item-text="username" clearable 
             label="User" required return-object>
         </v-autocomplete>
+        <h1>{{userId}}</h1>
     </v-container>
 </template>
 
