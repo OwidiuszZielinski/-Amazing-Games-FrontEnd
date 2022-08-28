@@ -1,0 +1,18 @@
+stages:
+  - build
+  - push
+
+build-docker-job:
+  tags:
+    - xor
+  stage: build
+  script:
+    - docker build -t reg.k8s.icydusk.io/amazing-games-frontend:latest -t reg.k8s.icydusk.io/amazing-games-frontend:$CI_COMMIT_SHA .
+
+publish-image:
+  tags:
+    - xor
+  stage: push
+  script:
+    - docker push reg.k8s.icydusk.io/amazing-games-frontend --all-tags
+
