@@ -43,7 +43,7 @@
 
 <script>
 import axios from 'axios';
-
+import router from '@/router'
 export default {
     name: "UserLogin",
     data() {
@@ -56,19 +56,25 @@ export default {
 
 
     methods: {
-        
-        async handleSubmit() {
-            const response = await axios.post(`${this.$apiurl}/login`, {
-               username: this.username,
-               password: this.password
-            });
-            console.log(response);
+      route(ln) {
+            router.push(ln);
+            
         },
+        async handleSubmit() {
+            console.log(this.username)
+            console.log(this.password)
+            await axios.get(`${this.$apiurl}/users`, {
+               auth: {username: this.username,password: this.password}
+            }).then((response) => {
+              console.log(response)
+              if(response.status==200){
+                this.route('/available')
+              }
+            });
+            
+        }
        
-},
-        
-    
-    
-};
+}
+}
 
 </script> -->
