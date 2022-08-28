@@ -11,7 +11,7 @@
                            </v-toolbar-title>
                      </v-toolbar>
                      <v-card-text>
-                     <form ref="form" @submit.prevent="login()">
+                     <form @submit.prevent="handleSubmit" >
                             <v-text-field
                               color = "#272727"
                               v-model="username"
@@ -42,21 +42,32 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
     name: "UserLogin",
     data() {
         return {
-            username: "",
-            password: "",
-        };
+                    username: '',
+                    password: '',
+                   
+        };          
     },
+
+
     methods: {
-        login() {
-            const { username } = this;
-            console.log(username + "logged in");
+        
+        async handleSubmit() {
+            const response = await axios.post(`${this.$apiurl}/login`, {
+               username: this.username,
+               password: this.password
+            });
+            console.log(response);
         },
-    },
+       
+},
+        
+    
     
 };
 

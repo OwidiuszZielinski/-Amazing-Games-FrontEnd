@@ -136,7 +136,7 @@ export default {
       { text: "Value", value: "value" },
       { text: "User ID", value: "user.username"},
       { text: "Status", value: "status"},
-      { text: "Games ID", value: "gameTitles"},
+      { text: "Titles", value: "gameTitles"},
       { text: "Actions", value: "actions", sortable: false },
     ],
   

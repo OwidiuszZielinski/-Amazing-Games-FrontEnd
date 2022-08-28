@@ -25,7 +25,7 @@
                   </v-col>
                   <v-col  >
                   
-                    <v-autocomplete v-model="editedUser.accesslevel" :items="accesslevelArray" label="AccessLevel" clearable></v-autocomplete>
+                    <v-autocomplete v-model="editedUser.roles" :items="accesslevelArray" label="Role" clearable></v-autocomplete>
                   
                   </v-col>
                   
@@ -53,18 +53,18 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteItem(deleteId)">OK</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:[`item.actions`]="{ item }">
+    <template v-slot:[`item.actions`]="{item }">
       <v-icon small class="mr-2" @click="editItem(item)">
         mdi-pencil
       </v-icon>
-      <v-icon small @click="deleteItem(item)">
+      <v-icon small @click="deleteItemConfirm(item);(deleteId = item.id)">
         mdi-delete
       </v-icon>
     </template>
@@ -78,7 +78,7 @@ import axios from 'axios'
 
 export default {
   data: () => ({
-
+    deleteId: '',
     dialog: false,
     dialogDelete: false,
     dialogEdit: false,
@@ -95,35 +95,24 @@ export default {
       { text: 'Username', value: 'username' },
       { text: 'Password', value: 'password' },
       { text: 'E-mail', value: 'email' },
-      { text: 'Accesslevel', value: 'accesslevel' },
+      { text: 'Accesslevel', value: 'roles' },
     
       { text: 'Actions', value: 'actions', sortable: false },
     ],
      users: [],
-     accesslevelArray: ['user','admin'],
+     accesslevelArray: ['ROLE_USER','ROLE_ADMIN'],
     editedIndex: -1,
     editedUser: {
 
-      title: '',
-      type: '',
-      price: '',
-      rating: '',
-      description: '',
-      availability: true,
+     username: '',
+     password: '',
+     email: '',
+     roles: ''
 
 
 
     },
-    defaultItem: {
-      title: '',
-      type: '',
-      price: '',
-      rating: '',
-      description: '',
-      availability: true,
-
-
-    },
+   
   }),
   computed: {
     formTitle() {
@@ -165,20 +154,19 @@ export default {
       this.dialogEdit = true
     },
 
-    deleteItem(item) {
+    deleteItemConfirm() {
+      this.dialogDelete = true
+      
+    },
 
-      axios.delete(`${this.$apiurl}/users/${item.id}`)
+    deleteItem(itemid) {
+      this. users.splice(this.editedIndex, 1)
+      axios.delete(`${this.$apiurl}/users/${itemid}`)
         .then(response => {
           console.log(response);
         });
-
-      this.dialogDelete = true
-    },
-
-    deleteItemConfirm() {
-      this. users.splice(this.editedIndex, 1)
       this.closeDelete()
-      this.$router.go(0);
+      
     },
     close() {
       this.dialog = false
@@ -199,7 +187,7 @@ export default {
 
     save() {
 
-      axios.post(`${this.$apiurl}/ users/`, this.editedUser).then((response) => {
+      axios.post(`${this.$apiurl}/users/`, this.editedUser).then((response) => {
         console.log(response);
       });
 

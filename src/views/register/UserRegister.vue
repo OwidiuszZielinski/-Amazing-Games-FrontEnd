@@ -14,7 +14,7 @@
                      <form >
                             <v-text-field
                               
-                              v-model="name"
+                              v-model="registerUser.username"
                               name="name"
                               label="Name"
                               type="text"
@@ -23,17 +23,10 @@
                               
                            ></v-text-field>
                            
-                            <v-text-field
-                              v-model="surname"
-                              name="surname"
-                              label="Surname"
-                              type="surname"
-                              placeholder="surname"
-                              required
-                           ></v-text-field>
+
                            <v-text-field
                               
-                              v-model="email"
+                              v-model="registerUser.email"
                               name="email"
                               label="E-mail"
                               type="text"
@@ -42,22 +35,15 @@
                               
                            ></v-text-field>
                            <v-text-field
-                              v-model="password"
+                              v-model="registerUser.password"
                               name="password"
                               label="Password"
                               type="password"
                               placeholder="password"
                               required
                            ></v-text-field>
-                          <v-text-field
-                              v-model="password"
-                              name="confirmpassword"
-                              label="Confirm Password"
-                              type="password"
-                              placeholder="confirmpassword"
-                              required
-                           ></v-text-field>
-                           <v-btn type="submit" class="mt-4" color="#272727" value="log in">JOIN US</v-btn>
+                          
+                           <v-btn  class="mt-4" color="#272727" @click="register()">JOIN US</v-btn>
                       </form>
                      </v-card-text>
                   </v-card> </v-col>  
@@ -69,21 +55,35 @@
 
 <script>
 
+import axios from 'axios';
+
+
 export default {
-    name: "UserLogin",
+    
     data() {
         return {
-            username: "",
-            password: "",
+           
+           
+    registerUser: {
+
+      username: '',
+      password: '',
+      email: '',
+      roles: 'ROLE_USER'
+
+    },
         };
     },
-    methods: {
-        login() {
-            const { username } = this;
-            console.log(username + "logged in");
+     methods: {
+        async register() {
+            const response = await axios.post(`${this.$apiurl}/users/`, 
+               this.registerUser
+            );
+            console.log(response);
         },
+        
     },
     
 };
 
-</script> -->
+</script> 
