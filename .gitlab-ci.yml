@@ -7,12 +7,14 @@ build-docker-job:
     - xor
   stage: build
   script:
-    - docker build -t reg.k8s.icydusk.io/amazing-games-frontend:latest -t reg.k8s.icydusk.io/amazing-games-frontend:$CI_COMMIT_SHA .
+
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_SHA .
 
 publish-image:
   tags:
     - xor
   stage: push
   script:
-    - docker push reg.k8s.icydusk.io/amazing-games-frontend --all-tags
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME --all-tags
 
