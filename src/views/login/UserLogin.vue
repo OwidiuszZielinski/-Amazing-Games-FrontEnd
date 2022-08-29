@@ -7,7 +7,7 @@
               <v-card class="elevation-12">
                      <v-toolbar dark color="#272727">
                         <v-toolbar-title>
-                            <p style="color: " >LOGIN</p>
+                            <p style="color: " >LOGIN </p>
                            </v-toolbar-title>
                      </v-toolbar>
                      <v-card-text>
@@ -47,11 +47,13 @@ import router from '@/router'
 export default {
     name: "UserLogin",
     data() {
+    
         return {
                     username: '',
                     password: '',
                    
-        };          
+        };
+            
     },
 
 
@@ -63,14 +65,20 @@ export default {
         async handleSubmit() {
             console.log(this.username)
             console.log(this.password)
-            await axios.get(`${this.$apiurl}/users`, {
-               auth: {username: this.username,password: this.password}
+           
+            await axios.post(`${this.$apiurl}/auth/login`, {
+               username: this.username,password: this.password
             }).then((response) => {
-              console.log(response)
+              
+              localStorage.setItem('token',response.data['jwt-token'])
+              console.log(response.data)
+              
               if(response.status==200){
                 this.route('/available')
               }
+              
             });
+            
             
         }
        

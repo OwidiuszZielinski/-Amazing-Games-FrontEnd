@@ -20,10 +20,18 @@ export default {
       games: []
     }
   },
-  created() {
+  
+  async created() {
     axios
-      .get(`${this.$apiurl}/games/`)
+      .get(`${this.$apiurl}/games/`, {
+        
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
       .then(response => (this.games = response.data))
+      console.log(localStorage.getItem('token'))
   },
   components: {
     GameCard
