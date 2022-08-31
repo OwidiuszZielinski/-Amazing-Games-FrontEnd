@@ -8,14 +8,17 @@
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              NEW ORDER {{newOrder.status.id}}
+              <v-col>
+              <v-icon>mdi-plus</v-icon>
+             NEW ORDER
+            </v-col>
 
             </v-btn>
           </template>
 
           <v-card>
             <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
+              <span class="text-h5"></span>
             </v-card-title>
 
             <v-card-text>

@@ -1,5 +1,5 @@
 <template> 
-  <v-dialog
+  <v-dialog v-model ="dialog"
          max-width="500px"
         >
           <template v-slot:activator="{ on, attrs }">
@@ -27,7 +27,7 @@
             </v-card-text>
             <v-card-actions class="justify-end">
               <v-btn
-                 @click="close"
+                 @click="close()"
                 text
                 
                 
@@ -42,6 +42,7 @@ export default {
    data() {
     return {
       dialog: false
+      
     }
    },
       

@@ -93,7 +93,7 @@ export default {
 
       },
       { text: 'Username', value: 'username' },
-      { text: 'Password', value: 'password' },
+      
       { text: 'E-mail', value: 'email' },
       { text: 'Accesslevel', value: 'roles' },
     
@@ -166,6 +166,7 @@ export default {
           console.log(response);
         });
       this.closeDelete()
+      this.$router.go(0);
       
     },
     close() {

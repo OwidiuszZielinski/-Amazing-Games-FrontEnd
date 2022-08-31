@@ -3,7 +3,7 @@
         <v-autocomplete  v-model="status" :items="statuses" item-text="stat"  @change="getStatus()" clearable 
             label="Status" return-object>
         </v-autocomplete>
-        <h1>{{status}}</h1>
+       
     </v-container>
 </template>
 

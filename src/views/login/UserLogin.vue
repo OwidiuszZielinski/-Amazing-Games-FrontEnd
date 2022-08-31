@@ -63,8 +63,7 @@ export default {
             
         },
         async handleSubmit() {
-            console.log(this.username)
-            console.log(this.password)
+           
            
             await axios.post(`${this.$apiurl}/auth/login`, {
                username: this.username,password: this.password
@@ -75,6 +74,7 @@ export default {
               
               if(response.status==200){
                 this.route('/available')
+                console.log(localStorage.getItem('token'))
               }
               
             });
