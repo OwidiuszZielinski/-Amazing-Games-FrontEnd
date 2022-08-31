@@ -8,7 +8,10 @@
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+              <v-col>
+              <v-icon>mdi-plus</v-icon>
               ADD GAME
+            </v-col>
             </v-btn>
           </template>
 

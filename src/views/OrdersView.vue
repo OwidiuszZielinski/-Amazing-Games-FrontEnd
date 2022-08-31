@@ -8,14 +8,17 @@
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              NEW ORDER {{newOrder.status.id}}
+              <v-col>
+              <v-icon>mdi-plus</v-icon>
+             NEW ORDER
+            </v-col>
 
             </v-btn>
           </template>
 
           <v-card>
             <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
+              <span class="text-h5"></span>
             </v-card-title>
 
             <v-card-text>
@@ -136,7 +139,7 @@ export default {
       { text: "Value", value: "value" },
       { text: "User ID", value: "user.username"},
       { text: "Status", value: "status"},
-      { text: "Games ID", value: "gameTitles"},
+      { text: "Titles", value: "gameTitles"},
       { text: "Actions", value: "actions", sortable: false },
     ],
   
@@ -185,7 +188,12 @@ export default {
   },
   created() {
     axios
-      .get(`${this.$apiurl}/orders/`)
+      .get(`${this.$apiurl}/orders/`, { 
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
       .then(response => (this.orders = response.data,
         this.orderGames(this.orders),this.showStatus(this.orders))).catch((err) => console.log(err));
   },
@@ -211,7 +219,12 @@ export default {
       }
     },
     saveEdit(order) {
-      axios.patch(`${this.$apiurl}/orders/${order.id}`, this.editedOrder)
+      axios.patch(`${this.$apiurl}/orders/${order.id}`, this.editedOrder,{ 
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
         .then(response => {
           console.log(response);
         });
@@ -227,7 +240,12 @@ export default {
       this.dialogEdit = true;
     },
     deleteOrder(order) {
-      axios.delete(`${this.$apiurl}/orders/${order.id}`)
+      axios.delete(`${this.$apiurl}/orders/${order.id}`,{ 
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
         .then(response => {
           console.log(response);
         });
@@ -253,7 +271,12 @@ export default {
     },
     save() {
 
-      axios.post(`${this.$apiurl}/orders/`, this.newOrder).then((response) => {
+      axios.post(`${this.$apiurl}/orders/`, this.newOrder , { 
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      }).then((response) => {
         console.log(response);
       });
       

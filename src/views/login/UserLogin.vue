@@ -7,11 +7,11 @@
               <v-card class="elevation-12">
                      <v-toolbar dark color="#272727">
                         <v-toolbar-title>
-                            <p style="color: " >LOGIN</p>
+                            <p style="color: " >LOGIN </p>
                            </v-toolbar-title>
                      </v-toolbar>
                      <v-card-text>
-                     <form ref="form" @submit.prevent="login()">
+                     <form @submit.prevent="handleSubmit" >
                             <v-text-field
                               color = "#272727"
                               v-model="username"
@@ -42,22 +42,47 @@
 </template>
 
 <script>
-
+import axios from 'axios';
+import router from '@/router'
 export default {
     name: "UserLogin",
     data() {
-        return {
-            username: "",
-            password: "",
-        };
-    },
-    methods: {
-        login() {
-            const { username } = this;
-            console.log(username + "logged in");
-        },
-    },
     
-};
+        return {
+                    username: '',
+                    password: '',
+                   
+        };
+            
+    },
+
+
+    methods: {
+      route(ln) {
+            router.push(ln);
+            
+        },
+        async handleSubmit() {
+           
+           
+            await axios.post(`${this.$apiurl}/auth/login`, {
+               username: this.username,password: this.password
+            }).then((response) => {
+              
+              localStorage.setItem('token',response.data['jwt-token'])
+              console.log(response.data)
+              
+              if(response.status==200){
+                this.route('/available')
+                console.log(localStorage.getItem('token'))
+              }
+              
+            });
+            
+            
+        }
+       
+}
+}
 
 </script> -->

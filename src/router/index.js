@@ -8,6 +8,7 @@ import UsersView from '../views/UsersView.vue'
 import OrdersView from '../views/OrdersView.vue'
 import CartView from '..//views/CartView.vue'
 import AddGameView from '..//views/AddGameView.vue'
+import StatisticsView from '..//views/StatisticsView.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     component: UserRegister
   },
   {
+    path: '/statistics',
+    name: 'statistics',
+    component: StatisticsView
+  },
+  {
     path: '/users',
     name: 'users',
     component: UsersView
@@ -50,6 +56,14 @@ const routes = [
     name: 'addgame',
     component: AddGameView
   },
+  {
+    name: 'MyGit',
+    path: '/github',
+    beforeEnter() {                    
+                  window.open("https://lab.togi.cloud/owi-learning", 
+                  '_blank');
+              }
+  }
 ]
 
 const router = new VueRouter({
