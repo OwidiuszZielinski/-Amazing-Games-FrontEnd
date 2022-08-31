@@ -9,7 +9,7 @@
         <v-dialog v-model="dialogEdit" max-width="500px">
           <v-card>
             <v-card-title>
-              <span class="text-h5">EDIT USER</span>
+              <span class="text-h5">EDIT USER {{editedUser}}</span>
             </v-card-title>
 
             <v-card-text>
@@ -141,8 +141,13 @@ export default {
   methods: {
 
     saveEdit(item) {
-      axios.patch(`${this.$apiurl}/users/${item.id}`, this.editedUser)
-        .then(response => {
+      axios.patch(`${this.$apiurl}/users/${item.id}`, this.editedUser , {
+        
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      }).then(response => {
           console.log(response);
         });
       this.close()
@@ -151,6 +156,7 @@ export default {
     editItem(item) {
       this.editedIndex = this. users.indexOf(item)
       this.editedUser = Object.assign({}, item)
+      this.editedUser.password = ''
       this.dialogEdit = true
     },
 
@@ -188,7 +194,13 @@ export default {
 
     save() {
 
-      axios.post(`${this.$apiurl}/users/`, this.editedUser).then((response) => {
+      axios.post(`${this.$apiurl}/users/`, this.editedUser , {
+        
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      }).then((response) => {
         console.log(response);
       });
 

@@ -7,6 +7,7 @@
     </v-col>
     <v-col md="6">
     <ViewsSparline></ViewsSparline>
+    <TestChart></TestChart>
     </v-col>   
 
    </v-container>
@@ -16,6 +17,7 @@
     import SellingSparkline from '../components/SparklinesItems/SellingSparkline.vue'
 import UsersSparkline from '../components/SparklinesItems/UsersSparkline.vue'
 import ViewsSparline from '../components/SparklinesItems/ViewsSparline.vue'
+import TestChart from '../components/SparklinesItems/TestChart.vue'
     export default {
       data: () => ({
         gameLabels: [
@@ -36,6 +38,6 @@ import ViewsSparline from '../components/SparklinesItems/ViewsSparline.vue'
           760,
         ],
       }),
-      components: { SellingSparkline, UsersSparkline, ViewsSparline },
+      components: { SellingSparkline, UsersSparkline, ViewsSparline, TestChart },
     }
   </script>
