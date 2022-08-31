@@ -9,8 +9,11 @@
               v-on="on"
               
             >
+            
             <v-icon>mdi-logout</v-icon>
+            <v-col>
               LOGOUT
+            </v-col>
             </v-btn>
           </template>
           <v-card>

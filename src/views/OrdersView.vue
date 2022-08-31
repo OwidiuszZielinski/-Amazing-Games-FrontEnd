@@ -188,7 +188,12 @@ export default {
   },
   created() {
     axios
-      .get(`${this.$apiurl}/orders/`)
+      .get(`${this.$apiurl}/orders/`, { 
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
       .then(response => (this.orders = response.data,
         this.orderGames(this.orders),this.showStatus(this.orders))).catch((err) => console.log(err));
   },
@@ -214,7 +219,12 @@ export default {
       }
     },
     saveEdit(order) {
-      axios.patch(`${this.$apiurl}/orders/${order.id}`, this.editedOrder)
+      axios.patch(`${this.$apiurl}/orders/${order.id}`, this.editedOrder,{ 
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
         .then(response => {
           console.log(response);
         });
@@ -230,7 +240,12 @@ export default {
       this.dialogEdit = true;
     },
     deleteOrder(order) {
-      axios.delete(`${this.$apiurl}/orders/${order.id}`)
+      axios.delete(`${this.$apiurl}/orders/${order.id}`,{ 
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
         .then(response => {
           console.log(response);
         });
@@ -256,7 +271,12 @@ export default {
     },
     save() {
 
-      axios.post(`${this.$apiurl}/orders/`, this.newOrder).then((response) => {
+      axios.post(`${this.$apiurl}/orders/`, this.newOrder , { 
+        headers:{
+          
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      }).then((response) => {
         console.log(response);
       });
       

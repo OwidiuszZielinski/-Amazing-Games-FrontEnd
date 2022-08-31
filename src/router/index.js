@@ -8,6 +8,7 @@ import UsersView from '../views/UsersView.vue'
 import OrdersView from '../views/OrdersView.vue'
 import CartView from '..//views/CartView.vue'
 import AddGameView from '..//views/AddGameView.vue'
+import StatisticsView from '..//views/StatisticsView.vue'
 
 Vue.use(VueRouter)
 
@@ -31,6 +32,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: UserRegister
+  },
+  {
+    path: '/statistics',
+    name: 'statistics',
+    component: StatisticsView
   },
   {
     path: '/users',

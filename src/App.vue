@@ -11,7 +11,7 @@
                 <v-icon>mdi-play</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title>Games</v-list-item-title>
+                <v-list-item-title>Games Library</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item  link v-on:click="route('/addgame')">
@@ -40,12 +40,12 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item  link>
+            <v-list-item  link v-on:click="route('/statistics')">
               <v-list-item-action>
-                <v-icon>mdi-cog</v-icon>
+                <v-icon>mdi-finance</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title>Settings</v-list-item-title>
+                <v-list-item-title>Statistics</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
 
@@ -62,8 +62,8 @@
 
             </v-toolbar-title>
           </v-btn>
-          <v-row justify='end'>
-            <v-col md="2" align='end'>
+            <v-col md="6"></v-col>
+            <v-col md="">
 
               <v-btn elevation=0 link v-on:click="route('/login')" block color="dark-grey">
                 <v-icon>mdi-account</v-icon>
@@ -72,7 +72,7 @@
                 </v-col>
               </v-btn>
             </v-col>
-            <v-col md="2" align='end'>
+            <v-col md="" >
 
               <v-btn elevation=0 link v-on:click="route('/register')" block color="dark-grey">
                 <v-icon>mdi-account-plus</v-icon>
@@ -81,7 +81,7 @@
                 </v-col>
               </v-btn>
             </v-col>
-            <v-col md="1" align='end'>
+            <v-col md="" >
 
               <v-btn elevation=0 link v-on:click="route('/cart')" block color="dark-grey">
                 <v-icon>mdi-cart</v-icon>
@@ -90,10 +90,10 @@
                 </v-col>
               </v-btn>
             </v-col>
-            <v-col md="2" align='end'>
+            <v-col md="" >
               <LogoutDialog v-model="showScheduleForm"></LogoutDialog>
             </v-col>
-          </v-row>
+        
         </v-app-bar>
 
 
@@ -106,11 +106,13 @@
         <v-footer app>
 
 
-          <v-col md="1">
+          <v-col md="2">
             <v-btn elevation=0 link v-on:click="route('/github')" block color="dark-grey">
               <v-icon>mdi-github</v-icon>
-
-              MY GITHUB {{ steamUsersOnline }}
+              <v-col>
+              MY GITHUB 
+            </v-col>
+            <v-icon>mdi-github</v-icon>
             </v-btn>
           </v-col>
           <v-col></v-col>
