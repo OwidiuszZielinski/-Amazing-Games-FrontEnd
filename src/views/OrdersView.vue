@@ -1,6 +1,6 @@
 <template>
-  <v-data-table  v-model="selected" :headers="headers" :items="orders" class="elevation-1"
-  :single-select="singleSelect" show-select>
+  <v-data-table v-model="selectedOrders" :headers="headers" :items="orders" class="elevation-1"
+    :single-select="singleSelect" show-select>
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Orders</v-toolbar-title>
@@ -10,20 +10,16 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
               <v-col>
-              <v-icon>mdi-plus</v-icon>
-             NEW ORDER{{selected}}
-            </v-col>
-
+                <v-icon>mdi-plus</v-icon>
+                NEW ORDER
+              </v-col>
             </v-btn>
           </template>
-
           <v-card>
             <v-card-title>
               <span class="text-h5"></span>
             </v-card-title>
-
             <v-card-text>
-
               <v-col>
                 <OrderStatusList :propstatus="newOrder.status" v-model="newOrder.status"></OrderStatusList>
               </v-col>
@@ -41,15 +37,13 @@
               <v-btn color="blue darken-1" text @click="close">
                 Cancel
               </v-btn>
-              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="(newOrder.games = newOrderGames); (newOrder.status = newOrder.status.id)"
-                @click="save">
-
+              <v-btn class="btn btn-primary" color="blue darken-1" text
+                v-on:click="(newOrder.games = newOrderGames); (newOrder.status = newOrder.status.id)" @click="save">
                 Save
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
-
 
         <v-dialog v-model="dialogEdit" max-width="500px">
           <v-card>
@@ -70,12 +64,8 @@
 
               </v-col>
               <template v-slot:top>
-      <v-switch
-        v-model="singleSelect"
-        label="Single select"
-        class="pa-3"
-      ></v-switch>
-    </template>
+                <v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
+              </template>
 
             </v-card-text>
 
@@ -84,8 +74,8 @@
               <v-btn color="blue darken-1" text @click="close">
                 Cancel
               </v-btn>
-              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="(editedOrder.games = editGames); 
-              (editedOrder.user = editedOrder.user.id);(editedOrder.status = editedOrder.status.id)" 
+              <v-btn class="btn btn-primary" color="blue darken-1" text v-on:click="(editedOrder.games = editGames);
+              (editedOrder.user = editedOrder.user.id); (editedOrder.status = editedOrder.status.id)"
                 @click="saveEdit(editedOrder)">
                 Save
               </v-btn>
@@ -99,7 +89,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteOrderConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteOrder()">OK</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -107,10 +97,10 @@
       </v-toolbar>
     </template>
     <template v-slot:[`item.actions`]="{ item }">
-      <v-icon small class="mr-2" @click="editOrder(item)" >
+      <v-icon small class="mr-2" @click="editOrder(item)">
         mdi-pencil
       </v-icon>
-      <v-icon small @click="deleteOrder(item)">
+      <v-icon small @click="(selectedOrderIds.push(item.id)); (selectedObjectToIds()); (deleteOrderConfirm(item))">
         mdi-delete
       </v-icon>
     </template>
@@ -131,7 +121,8 @@ import EditUserList from '../components/editOrderComponents/EditUserList.vue'
 export default {
   data: () => ({
     singleSelect: false,
-        selected: [],
+    selectedOrderIds: [],
+    selectedOrders: [],
     dialog: false,
     dialogDelete: false,
     dialogEdit: false,
@@ -146,19 +137,19 @@ export default {
       },
       { text: "Date", value: "date" },
       { text: "Value", value: "value" },
-      { text: "User ID", value: "user.username"},
-      { text: "Status", value: "status"},
-      { text: "Titles", value: "gameTitles"},
+      { text: "User ID", value: "user.username" },
+      { text: "Status", value: "status" },
+      { text: "Titles", value: "gameTitles" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-  
+
     statuses: [
-                {id: '0', stat: 'STARTED'},
-                {id: '1', stat: 'IN-PROGRESS'},
-                {id: '2', stat: 'POSTED'},
-                {id: '3', stat: 'CANCELED'},
-                {id: '4', stat: 'ENDED'},
-                ],
+      { id: '0', stat: 'STARTED' },
+      { id: '1', stat: 'IN-PROGRESS' },
+      { id: '2', stat: 'POSTED' },
+      { id: '3', stat: 'CANCELED' },
+      { id: '4', stat: 'ENDED' },
+    ],
     editUser: "",
     editGames: [],
     orders: [],
@@ -177,7 +168,7 @@ export default {
       status: "",
       date: "",
     },
-    
+
   }),
   computed: {
     formTitle() {
@@ -197,25 +188,25 @@ export default {
   },
   created() {
     axios
-      .get(`${this.$apiurl}/orders/`, { 
-        headers:{
-          
+      .get(`${this.$apiurl}/orders/`, {
+        headers: {
+
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       })
       .then(response => (this.orders = response.data,
-        this.orderGames(this.orders),this.showStatus(this.orders))).catch((err) => console.log(err));
+        this.orderGames(this.orders), this.showStatus(this.orders))).catch((err) => console.log(err));
   },
   methods: {
-    
-    showStatus(orderlist){
-     
+
+    showStatus(orderlist) {
+
       for (const order of orderlist) {
         var orderStat = this.statuses[order.status].stat
-          console.log(orderStat)
-          order.status = orderStat
+        console.log(orderStat)
+        order.status = orderStat
       }
-      
+
     },
 
     orderGames(orderlist) {
@@ -227,10 +218,18 @@ export default {
         order.gameTitles = gameTitles.join(",");
       }
     },
+    selectedObjectToIds() {
+
+      for (const select of this.selectedOrders) {
+        this.selectedOrderIds.push(select.id)
+
+      }
+    },
+
     saveEdit(order) {
-      axios.patch(`${this.$apiurl}/orders/${order.id}`, this.editedOrder,{ 
-        headers:{
-          
+      axios.patch(`${this.$apiurl}/orders/${order.id}`, this.editedOrder, {
+        headers: {
+
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       })
@@ -248,22 +247,28 @@ export default {
       this.editedOrder.status = order.status;
       this.dialogEdit = true;
     },
-    deleteOrder(order) {
-      axios.delete(`${this.$apiurl}/orders/${order.id}`,{ 
-        headers:{
-          
-          Authorization: 'Bearer ' + localStorage.getItem('token')
+    deleteOrder() {
+      axios({
+        method: 'delete',
+        url: `${this.$apiurl}/orders/`,
+        data: {
+          ids: this.selectedOrderIds,
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
         }
-      })
-        .then(response => {
-          console.log(response);
-        });
-      this.dialogDelete = true;
+      }).then(response => {
+        console.log(response);
+      });
+      this.closeDelete()
+      
+
     },
+
+
     deleteOrderConfirm() {
-      this.orders.splice(this.editedIndex, 1);
-      this.closeDelete();
-      this.$router.go(0);
+      this.dialogDelete = true
+
     },
     close() {
       this.dialog = false;
@@ -280,16 +285,17 @@ export default {
     },
     save() {
 
-      axios.post(`${this.$apiurl}/orders/`, this.newOrder , { 
-        headers:{
-          
+      axios.post(`${this.$apiurl}/orders/`, this.newOrder, {
+        headers: {
+
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       }).then((response) => {
         console.log(response);
       });
-      
+
       this.close();
+      this.$router.go(0);
     },
   },
   components: { GameList, UserList, OrderStatusList, EditOrderStatusList, EditOrderGameList, EditUserList }
