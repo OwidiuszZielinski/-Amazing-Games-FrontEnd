@@ -1,5 +1,6 @@
 <template>
-  <v-data-table :headers="headers" :items=" users" sort-by="title" class="elevation-1">
+  <v-data-table v-model="selected" :headers="headers" :items=" users" sort-by="title" class="elevation-1"
+  :single-select="singleSelect" show-select>
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title> Users</v-toolbar-title>
@@ -44,7 +45,13 @@
           </v-card>
         </v-dialog>
 
-
+        <template v-slot:top>
+      <v-switch
+        v-model="singleSelect"
+        label="Single select"
+        class="pa-3"
+      ></v-switch>
+    </template>
 
 
         <v-dialog v-model="dialogDelete" max-width="500px">
@@ -78,6 +85,8 @@ import axios from 'axios'
 
 export default {
   data: () => ({
+    singleSelect: false,
+        selected: [],
     deleteId: '',
     dialog: false,
     dialogDelete: false,

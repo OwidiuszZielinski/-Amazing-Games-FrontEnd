@@ -1,5 +1,6 @@
 <template>
-  <v-data-table :headers="headers" :items="games" sort-by="title" class="elevation-1">
+  <v-data-table v-model="selected" :headers="headers" :items="games" sort-by="title" class="elevation-1"
+  :single-select="singleSelect" show-select>
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Games</v-toolbar-title>
@@ -30,13 +31,13 @@
                   </v-col>
                   <v-col  >
                     
-                    <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
+                    <v-text-field v-model="editedItem.price" label="Price" prefix="$"></v-text-field>
                   </v-col>
                   <v-col  >
-                    <v-text-field v-model="editedItem.rating" label="Rating"></v-text-field>
+                    <v-text-field v-model="editedItem.rating" label="Rating" prefix="10/"></v-text-field>
                   </v-col>
                   <v-col  >
-                    <v-textarea v-model="editedItem.description" label="Description"></v-textarea>
+                    <v-textarea v-model="editedItem.description" label="Description" counter maxlength="500"></v-textarea>
                   </v-col>
                   
               
@@ -59,7 +60,13 @@
             <v-card-title>
               <span class="text-h5">EDIT GAME</span>
             </v-card-title>
-
+            <template v-slot:top>
+      <v-switch
+        v-model="singleSelect"
+        label="Single select"
+        class="pa-3"
+      ></v-switch>
+    </template>
             <v-card-text>
               
                   <v-col  >
@@ -69,13 +76,13 @@
                     <v-text-field v-model="editedItem.type" label="Type"></v-text-field>
                   </v-col>
                   <v-col  >
-                    <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
+                    <v-text-field v-model="editedItem.price" label="Price" prefix="$"></v-text-field>
                   </v-col>
                   <v-col  >
-                    <v-text-field v-model="editedItem.rating" label="Rating"></v-text-field>
+                    <v-text-field v-model="editedItem.rating" label="Rating" prefix="10/"></v-text-field>
                   </v-col>
                   <v-col  >
-                    <v-textarea v-model="editedItem.description" label="Description"></v-textarea>
+                    <v-textarea v-model="editedItem.description" label="Description" ></v-textarea>
                   </v-col>
                   <v-col  >
                     <v-autocomplete v-model="editedItem.availability" :items="availabilityArray" label="Availability" clearable></v-autocomplete>
@@ -133,6 +140,8 @@ import axios from 'axios'
 export default {
   data: () => ({
 
+    singleSelect: false,
+        selected: [],
     dialog: false,
     dialogDelete: false,
     dialogEdit: false,
@@ -153,6 +162,7 @@ export default {
       { text: 'Availability', value: 'availability' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
+    
     games: [],
     availabilityArray: ['true','false'],
     editedIndex: -1,

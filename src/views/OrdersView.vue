@@ -1,5 +1,6 @@
 <template>
-  <v-data-table :headers="headers" :items="orders" class="elevation-1">
+  <v-data-table  v-model="selected" :headers="headers" :items="orders" class="elevation-1"
+  :single-select="singleSelect" show-select>
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Orders</v-toolbar-title>
@@ -10,7 +11,7 @@
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
               <v-col>
               <v-icon>mdi-plus</v-icon>
-             NEW ORDER
+             NEW ORDER{{selected}}
             </v-col>
 
             </v-btn>
@@ -68,7 +69,13 @@
                 <EditOrderGameList v-model="editGames" :propgamesedit="editedOrder.games"></EditOrderGameList>
 
               </v-col>
-             
+              <template v-slot:top>
+      <v-switch
+        v-model="singleSelect"
+        label="Single select"
+        class="pa-3"
+      ></v-switch>
+    </template>
 
             </v-card-text>
 
@@ -123,6 +130,8 @@ import EditUserList from '../components/editOrderComponents/EditUserList.vue'
 
 export default {
   data: () => ({
+    singleSelect: false,
+        selected: [],
     dialog: false,
     dialogDelete: false,
     dialogEdit: false,

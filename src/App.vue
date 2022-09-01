@@ -51,37 +51,37 @@
 
 
           </v-list>
-
+          
         </v-navigation-drawer>
 
-
-        <v-app-bar app clipped-left>
+        
+        <v-app-bar app clipped-left  >
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
           <v-btn elevation=0>
             <v-toolbar-title link v-on:click="route('/')">Amazing Games
 
             </v-toolbar-title>
           </v-btn>
-            <v-col md="6"></v-col>
-            <v-col md="">
-
+        <v-col md="4"></v-col>
+          
+          <v-col >
               <v-btn elevation=0 link v-on:click="route('/login')" block color="dark-grey">
                 <v-icon>mdi-account</v-icon>
-                <v-col>
+                <v-col >
                   LOGIN
                 </v-col>
               </v-btn>
             </v-col>
-            <v-col md="" >
+            <v-col  >
 
               <v-btn elevation=0 link v-on:click="route('/register')" block color="dark-grey">
                 <v-icon>mdi-account-plus</v-icon>
-                <v-col>
+                <v-col >
                   REGISTER
                 </v-col>
               </v-btn>
             </v-col>
-            <v-col md="" >
+            <v-col>
 
               <v-btn elevation=0 link v-on:click="route('/cart')" block color="dark-grey">
                 <v-icon>mdi-cart</v-icon>
@@ -90,12 +90,12 @@
                 </v-col>
               </v-btn>
             </v-col>
-            <v-col md="" >
+            <v-col >
               <LogoutDialog v-model="showScheduleForm"></LogoutDialog>
             </v-col>
-        
+         
         </v-app-bar>
-
+   
 
         <v-main fluid>
 
