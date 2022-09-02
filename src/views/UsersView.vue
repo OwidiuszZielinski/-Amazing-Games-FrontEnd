@@ -1,13 +1,17 @@
 <template>
-  <v-data-table v-model="selected" :headers="headers" :items=" users" sort-by="title" class="elevation-1"
+  <v-data-table v-model="selectedUsers" :headers="headers" :items=" users" sort-by="title" class="elevation-1"
   :single-select="singleSelect" show-select>
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title> Users</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
-      
+       
+                
+                <h1>{{selectedUserIds}}</h1>
+              
 
         <v-dialog v-model="dialogEdit" max-width="500px">
+         
           <v-card>
             <v-card-title>
               <span class="text-h5">EDIT USER {{editedUser}}</span>
@@ -60,7 +64,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItem(deleteId)">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteUser()">OK</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -71,7 +75,7 @@
       <v-icon small class="mr-2" @click="editItem(item)">
         mdi-pencil
       </v-icon>
-      <v-icon small @click="deleteItemConfirm(item);(deleteId = item.id)">
+      <v-icon small @click="(selectedUserIds.push(item.id)); (selectedUsersObjectsToIds()); (deleteUserConfirm())">
         mdi-delete
       </v-icon>
     </template>
@@ -86,8 +90,8 @@ import axios from 'axios'
 export default {
   data: () => ({
     singleSelect: false,
-        selected: [],
-    deleteId: '',
+    selectedUsers: [],
+    selectedUserIds: [],
     dialog: false,
     dialogDelete: false,
     dialogEdit: false,
@@ -148,6 +152,13 @@ export default {
   },
  
   methods: {
+    
+    selectedUsersObjectsToIds() {
+      
+      for (const select of this.selectedUsers) {
+      this.selectedUserIds.push(select.id)
+        }
+    },
 
     saveEdit(item) {
       axios.patch(`${this.$apiurl}/users/${item.id}`, this.editedUser , {
@@ -169,20 +180,28 @@ export default {
       this.dialogEdit = true
     },
 
-    deleteItemConfirm() {
+    deleteUserConfirm() {
       this.dialogDelete = true
       
     },
 
-    deleteItem(itemid) {
-      this. users.splice(this.editedIndex, 1)
-      axios.delete(`${this.$apiurl}/users/${itemid}`)
-        .then(response => {
-          console.log(response);
-        });
+    deleteUser() {
+      axios({
+        method: 'delete',
+        url: `${this.$apiurl}/users/`,
+        data: {
+          ids: this.selectedUserIds,
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+        }
+      }).then(response => {
+        console.log(response);
+      });
       this.closeDelete()
       this.$router.go(0);
       
+
     },
     close() {
       this.dialog = false

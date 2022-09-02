@@ -1,5 +1,5 @@
 <template>
-  <v-data-table v-model="selected" :headers="headers" :items="games" sort-by="title" class="elevation-1"
+  <v-data-table v-model="selectedGames" :headers="headers" :items="games" sort-by="title" class="elevation-1"
   :single-select="singleSelect" show-select>
     <template v-slot:top>
       <v-toolbar flat>
@@ -114,7 +114,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteItem()">OK</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -125,7 +125,7 @@
       <v-icon small class="mr-2" @click="editItem(item)">
         mdi-pencil
       </v-icon>
-      <v-icon small @click="deleteItem(item)">
+      <v-icon small @click="(selectedGamesIds.push(item.id)); (selectedGamesTakeIds()); (deleteItemConfirm())">
         mdi-delete
       </v-icon>
     </template>
@@ -141,7 +141,8 @@ export default {
   data: () => ({
 
     singleSelect: false,
-        selected: [],
+    selectedGames: [],
+    selectedGamesIds: [],
     dialog: false,
     dialogDelete: false,
     dialogEdit: false,
@@ -215,6 +216,12 @@ export default {
  
   methods: {
 
+    selectedGamesTakeIds(){
+      for(const select of this.selectedGames){
+        this.selectedGamesIds.push(select.id)
+      }
+    },
+
     saveEdit(item) {
       axios.patch(`${this.$apiurl}/games/${item.id}`, this.editedItem)
         .then(response => {
@@ -223,26 +230,32 @@ export default {
       this.close()
     },
 
-    editItem(item) {
-      this.editedIndex = this.games.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogEdit = true
-    },
+    editItem (item) {
+        this.editedIndex = this.games.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialogEdit = true
+      },
+      deleteItem () {
+      axios({
+        method: 'delete',
+        url: `${this.$apiurl}/games/`,
+        data: {
+          ids: this.selectedGamesIds,
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+        }
+      }).then(response => {
+        console.log(response);
+      });
+      this.closeDelete()
+      this.$router.go(0);
+      
 
-    deleteItem(item) {
-
-      axios.delete(`${this.$apiurl}/games/${item.id}`)
-        .then(response => {
-          console.log(response);
-        });
-
-      this.dialogDelete = true
     },
 
     deleteItemConfirm() {
-      this.games.splice(this.editedIndex, 1)
-      this.closeDelete()
-      this.$router.go(0);
+      this.dialogDelete = true
     },
     close() {
       this.dialog = false
@@ -268,6 +281,7 @@ export default {
       });
 
       this.close()
+      // this.$router.go(0);
     },
   },
 }

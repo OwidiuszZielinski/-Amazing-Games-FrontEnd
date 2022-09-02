@@ -112,7 +112,8 @@ export default {
                         console.log(response.status);
                         this.responseText ='REGISTER SUCCESFULL' 
                         this.registerdialog = true
-                }).then(this.registerdialog = true)
+                }).then(this.registerdialog = true).then(this.responseText ='LOGIN OR EMAIL ADRESS IS BUSY')
+                
             },
                     
 

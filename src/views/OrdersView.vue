@@ -11,7 +11,7 @@
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
               <v-col>
                 <v-icon>mdi-plus</v-icon>
-                NEW ORDER
+                NEW ORDER {{selectedOrderIds}}
               </v-col>
             </v-btn>
           </template>
