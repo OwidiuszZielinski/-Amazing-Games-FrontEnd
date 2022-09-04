@@ -1,5 +1,7 @@
 <template>
+  
   <div id="app">
+  
     <v-app id="inspire">
       <v-app id="inspire">
         <v-navigation-drawer hidden v-model="drawer" app clipped>
@@ -7,7 +9,7 @@
           <v-list dense>
 
             <v-list-item  link v-on:click="route('/available')">
-              <v-list-item-action>
+              <v-list-item-action >
                 <v-icon>mdi-play</v-icon>
               </v-list-item-action>
               <v-list-item-content>
@@ -83,14 +85,18 @@
             </v-col>
             <v-col>
               <v-badge
+              v-model="elementsInCart"
+        :content="elementsInCart"
+        :value="getCartElements()"
         
-        :content="itemsOnBasket"
-        :value="itemsOnBasket"
+       
         color="orange"
         overlap
         >
-          <v-btn elevation=0 link v-on:click="route('/cart')" block color="dark-grey">
-         
+          <v-btn elevation=0 link v-on:click="route('/cart')" block color="dark-grey"
+              
+          >
+
                 <v-icon>mdi-cart</v-icon>
                 <v-col>
                   Basket
@@ -100,7 +106,7 @@
             </v-badge>
             </v-col>
             <v-col >
-              <LogoutDialog v-model="showScheduleForm"></LogoutDialog>
+              <LogoutDialog></LogoutDialog>
             </v-col>
          
         </v-app-bar>
@@ -130,15 +136,18 @@
           </v-hover>
           </v-col>
           <v-col></v-col>
+          
           <span>&copy; 2022 Owidiusz Zieliński </span>
 
         </v-footer>
 
       </v-app>
+      
     </v-app>
     <template>
       
     </template>
+    
   </div>
 
 </template>
@@ -170,23 +179,50 @@ nav {
 <script>
 import router from '@/router'
 import LogoutDialog from './components/LogoutDialog.vue';
+import axios from 'axios';
 
 
 export default {
   data: () => ({
-    itemsOnBasket: localStorage.getItem('cart'),
-    steamUsersOnline: '',
+    elementsInCart: 0,
+    items:[],
+    itemsOnCart: localStorage.getItem('cart'),
     showScheduleForm: false,
     drawer: null,
     
   }),
 
-  methods: {
+  methods: {  
+    
+
+    getCartElements() {
+
+       axios
+        .get(`${this.$apiurl}/cart/54`, {
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+        }
+    })
+        .then(response => (this.items = response.data["games"], this.elements())).catch((err) => console.log(err));
+     
+      },
+    
+    elements(){
+      var elements =0
+      for (const iterate of this.items) {
+                iterate;
+                elements++;
+                
+            }
+           this.elementsInCart = elements
+          },
+    
 
     route(ln) {
+      this.getCartElements()
       router.push(ln).catch(()=>{});
     }
   },
-  components: { LogoutDialog }
+  components: { LogoutDialog}
 }
 </script>

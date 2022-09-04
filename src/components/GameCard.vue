@@ -17,11 +17,11 @@
         <MoreInfoDialog v-model="showScheduleForm"></MoreInfoDialog>
       </v-col>
     <v-col md="6">
-        <v-btn @click="itemsOnBasket++" text color="green">
+        <v-btn text color="green" @click="(itemToCart=id); (addtoCart());($router.go(0))">
          <v-col>
           <v-icon>mdi-cart</v-icon>
         </v-col>
-          {{ price }} $ {{itemsOnBasket}}
+          {{ price }} $ 
 
         </v-btn>
     </v-col>
@@ -33,17 +33,33 @@
 
 <script>
 import MoreInfoDialog from './MoreInfoDialog.vue';
+import axios from 'axios';
 
 export default {
 
   data() {
     return {
+     
       showScheduleForm: { show: false, description: this.description, title: this.title },
-      itemsOnBasket: 0,
+     
     }
   },
 
-  props: ["type", "title", "price", "rating", "description"],
+  props: ["id","type", "title", "price", "rating", "description"],
+
+    
+methods: {
+  
+   addtoCart(){
+            axios.post(`${this.$apiurl}/cart/54`, {id: this.itemToCart}).then((response) => {
+                       console.log(response.status)   
+                         
+               })
+               
+           },
+            
+  },
+  
   components: { MoreInfoDialog },
 }
 </script>

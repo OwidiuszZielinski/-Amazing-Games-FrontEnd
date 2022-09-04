@@ -40,7 +40,7 @@
         }
        },
           
-      props:['show'],
+      
       methods: {
         logout() {
         localStorage.removeItem('token')

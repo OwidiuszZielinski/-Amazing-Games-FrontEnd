@@ -2,7 +2,7 @@
 
   <v-container fill-height >
     
-      <GameCard v-for="game in games" :key="game.id" :title="game.title" :type="game.type" :rating="game.rating"
+      <GameCard v-for="game in games" :key="game.id" :id="game.id" :title="game.title" :type="game.type" :rating="game.rating"
         :price="game.price" :description="game.description" />
    
   </v-container>
