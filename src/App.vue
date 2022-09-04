@@ -3,7 +3,7 @@
     <v-app id="inspire">
       <v-app id="inspire">
         <v-navigation-drawer hidden v-model="drawer" app clipped>
-
+          
           <v-list dense>
 
             <v-list-item  link v-on:click="route('/available')">
@@ -82,13 +82,22 @@
               </v-btn>
             </v-col>
             <v-col>
-
-              <v-btn elevation=0 link v-on:click="route('/cart')" block color="dark-grey">
+              <v-badge
+        
+        :content="itemsOnBasket"
+        :value="itemsOnBasket"
+        color="orange"
+        overlap
+        >
+          <v-btn elevation=0 link v-on:click="route('/cart')" block color="dark-grey">
+         
                 <v-icon>mdi-cart</v-icon>
                 <v-col>
-                  CART
+                  Basket
                 </v-col>
+           
               </v-btn>
+            </v-badge>
             </v-col>
             <v-col >
               <LogoutDialog v-model="showScheduleForm"></LogoutDialog>
@@ -107,13 +116,18 @@
 
 
           <v-col md="2">
-            <v-btn elevation=0 link v-on:click="route('/github')" block color="dark-grey">
+            <v-hover>
+              <template  v-slot:default="{ hover }">
+            <v-btn :elevation="hover ? 12 : 0" link v-on:click="route('/github')" block color="dark-grey">
               <v-icon>mdi-github</v-icon>
               <v-col>
               MY GITHUB 
             </v-col>
             <v-icon>mdi-github</v-icon>
+            
             </v-btn>
+          </template>
+          </v-hover>
           </v-col>
           <v-col></v-col>
           <span>&copy; 2022 Owidiusz Zieliński </span>
@@ -122,6 +136,9 @@
 
       </v-app>
     </v-app>
+    <template>
+      
+    </template>
   </div>
 
 </template>
@@ -155,14 +172,13 @@ import router from '@/router'
 import LogoutDialog from './components/LogoutDialog.vue';
 
 
-
-
 export default {
   data: () => ({
- 
+    itemsOnBasket: localStorage.getItem('cart'),
     steamUsersOnline: '',
     showScheduleForm: false,
     drawer: null,
+    
   }),
 
   methods: {

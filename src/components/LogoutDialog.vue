@@ -44,6 +44,8 @@
       methods: {
         logout() {
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        console.log(localStorage.getItem('user'))
         console.log(localStorage.getItem('token'))
         this.close()
         },

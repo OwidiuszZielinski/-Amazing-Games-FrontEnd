@@ -66,7 +66,9 @@ export default {
       }).then((response) => {
 
         localStorage.setItem('token', response.data['jwt-token'])
+        localStorage.setItem('user',this.username)
         console.log(response.data)
+        console.log(this.username)
 
         if (response.status == 200) {
           this.route('/available')
@@ -81,4 +83,4 @@ export default {
   }
 }
 
-</script> -->
+</script> 

@@ -1,5 +1,5 @@
 <template>
-   
+   <main style="height: 100%;background: url('Background2.jpg') no-repeat center center" justify="center" >
    <v-container fill-height>
    <v-col md="6">
     <SellingSparkline></SellingSparkline>
@@ -11,7 +11,9 @@
     </v-col>   
 
    </v-container>
+  </main>
   </template>
+  
   <script>
    
     import SellingSparkline from '../components/SparklinesItems/SellingSparkline.vue'

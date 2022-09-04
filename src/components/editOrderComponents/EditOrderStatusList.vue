@@ -14,11 +14,12 @@ export default {
         return {
             status: this.propstatusedit,
              statusList: [
-                {id: '0', stat: 'STARTED'},
-                {id: '1', stat: 'IN-PROGRESS'},
-                {id: '2', stat: 'POSTED'},
-                {id: '3', stat: 'CANCELED'},
-                {id: '4', stat: 'ENDED'},
+             { id: '0', stat: 'IN-BASKET' },
+      { id: '1', stat: 'STARTED' },
+      { id: '2', stat: 'IN-PROGRESS' },
+      { id: '3', stat: 'POSTED' },
+      { id: '4', stat: 'CANCELED' },
+      { id: '5', stat: 'ENDED' },
                 ],
         }
     },

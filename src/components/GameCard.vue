@@ -17,11 +17,11 @@
         <MoreInfoDialog v-model="showScheduleForm"></MoreInfoDialog>
       </v-col>
     <v-col md="6">
-        <v-btn  text color="green">
+        <v-btn @click="itemsOnBasket++" text color="green">
          <v-col>
           <v-icon>mdi-cart</v-icon>
         </v-col>
-          {{ price }} $
+          {{ price }} $ {{itemsOnBasket}}
 
         </v-btn>
     </v-col>
@@ -38,8 +38,8 @@ export default {
 
   data() {
     return {
-      showScheduleForm: { show: false, description: this.description, title: this.title }
-
+      showScheduleForm: { show: false, description: this.description, title: this.title },
+      itemsOnBasket: 0,
     }
   },
 

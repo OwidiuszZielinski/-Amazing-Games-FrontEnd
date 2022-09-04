@@ -1,4 +1,5 @@
 <template>
+   <main style="height: 100%;background: url('Background2.jpg') no-repeat center center" justify="center" >
   <v-data-table v-model="selectedGames" :headers="headers" :items="games" sort-by="title" class="elevation-1"
   :single-select="singleSelect" show-select>
     <template v-slot:top>
@@ -131,6 +132,7 @@
     </template>
 
   </v-data-table>
+</main>
 </template>
 
 <script>

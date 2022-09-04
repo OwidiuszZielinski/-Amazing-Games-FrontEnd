@@ -1,4 +1,5 @@
 <template>
+   <main style="height: 100%;background: url('Background2.jpg') no-repeat center center" justify="center" >
   <v-data-table v-model="selectedUsers" :headers="headers" :items=" users" sort-by="title" class="elevation-1"
   :single-select="singleSelect" show-select>
     <template v-slot:top>
@@ -6,15 +7,13 @@
         <v-toolbar-title> Users</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
        
-                
-                <h1>{{selectedUserIds}}</h1>
-              
+         
 
         <v-dialog v-model="dialogEdit" max-width="500px">
          
           <v-card>
             <v-card-title>
-              <span class="text-h5">EDIT USER {{editedUser}}</span>
+              <span class="text-h5">EDIT USER </span>
             </v-card-title>
 
             <v-card-text>
@@ -81,6 +80,7 @@
     </template>
 
   </v-data-table>
+</main>
 </template>
 
 <script>

@@ -1,4 +1,5 @@
 <template>
+   <main style="height: 100%;background: url('Background2.jpg') no-repeat center center" justify="center" >
   <v-data-table v-model="selectedOrders" :headers="headers" :items="orders" class="elevation-1"
     :single-select="singleSelect" show-select>
     <template v-slot:top>
@@ -106,6 +107,7 @@
     </template>
 
   </v-data-table>
+</main>
 </template>
 
 <script>
@@ -144,11 +146,13 @@ export default {
     ],
 
     statuses: [
-      { id: '0', stat: 'STARTED' },
-      { id: '1', stat: 'IN-PROGRESS' },
-      { id: '2', stat: 'POSTED' },
-      { id: '3', stat: 'CANCELED' },
-      { id: '4', stat: 'ENDED' },
+    { id: '0', stat: 'IN-BASKET' },
+      { id: '1', stat: 'STARTED' },
+      { id: '2', stat: 'IN-PROGRESS' },
+      { id: '3', stat: 'POSTED' },
+      { id: '4', stat: 'CANCELED' },
+      { id: '5', stat: 'ENDED' },
+      
     ],
     editUser: "",
     editGames: [],
