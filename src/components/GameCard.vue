@@ -17,7 +17,7 @@
         <MoreInfoDialog v-model="showScheduleForm"></MoreInfoDialog>
       </v-col>
     <v-col md="6">
-        <v-btn text color="green" @click="(itemToCart=id); (addtoCart());($router.go(0))">
+        <v-btn text color="green" @click="(itemToCart=id); (addtoCart())">
          <v-col>
           <v-icon>mdi-cart</v-icon>
         </v-col>

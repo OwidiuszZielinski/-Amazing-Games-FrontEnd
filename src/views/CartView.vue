@@ -53,15 +53,37 @@
       </v-toolbar>
     </template>
     
-    <template v-slot:[`item.actions`]>
+    <template  v-slot:[`item.actions`]>
       
+      <v-row justify="end">
+       
+      <v-col  md="2">
+      <v-btn @click="d"
+      color="green darken-1">
+        <v-icon small>
+          mdi-plus
+        </v-icon>
+      </v-btn>
+      </v-col>
+      <v-col  md="2">
+      <v-btn @click="d"
+      color="red accent-4">
+        <v-icon small>
+          mdi-minus
+        </v-icon>
+      </v-btn>
+      </v-col>
+      <v-col  md="2">
       <v-btn @click="deleteItem()"
       color="deep-orange darken-4">
         <v-icon small>
           mdi-window-close
         </v-icon>
       </v-btn>
-   
+    </v-col>
+    
+    </v-row>
+  
       </template >
      
   </v-data-table>
@@ -91,11 +113,6 @@
   
   <script>
     import axios from 'axios'
-
-
-
-
-
     export default {
     data: () => ({
         cartValue: 0,
@@ -109,7 +126,7 @@
         headers: [
             { text: "Title", align: "end", value: "title" },
             { text: "Value [ $ ]", align: "end", value: "price" },
-            { text: "Pieces", align: "end", value: "1" },
+            { text: "Quantity", align: "end", value: "quantity" },
             { text: "Actions", align: "end", value: "actions", sortable: false },
         ],
     }),
